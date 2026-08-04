@@ -1,0 +1,25 @@
+$1.Construtor E:@ 
+->Uma struct, onde todos os campos obrigatoriamente existem
+->Uma pessoa com idade E sexo E nome E nacionalidade
+->Tamanho vai ser soma de tamanho de componentes~
+$2.Construtor OU:@ 
+->Uma union, onde um campo exclui a possibilidade de existencia dos outros
+->Uma pessoa com CPF OU RG OU Numero de identificacao benjamin constant(sla?)
+->O C nao fala qual campo voce preencheu, ent voce pode acessar CPF achando que antes tinha colocado RG
+->Tamanho vai ser igual o maior campo~
+$3.Uniao Descriminada:@
+->Uma uniao, com um campo escolhido com numeros escolhidos arbitrariamente para representar qual campo esta sendo usado
+->Geralmente se usa enum p saber qual ~
+$4.Enum:@ Um nome que agora vira um int 
+->typedef enum entrada{zero,um,dois,tres}entrada;
+->Pode fazer Dom=1, ou deixar no automatico que vai comecar 0 e ser crescente
+->Enum nao deixa de ser um int!
+->Cuidado com usar o mesmo nome p uma variavel, geralmente botar coisa_ENUM eh bom ~
+$5.Vantagens:@
+->Melhor legibilidade(enum em vez de 0 1 2 3 passam maior ideia de significado)
+->Melhor agrupamento de dados (struct representand uma entrada de usuario)
+->Maior abstracao ~
+$6.Desvantagens:@
+->Reusar nomes, muita verbosidade,abstracao demais
+->Memoria demais
+->Problema com acessar coisa errada em union ja mencionado ~

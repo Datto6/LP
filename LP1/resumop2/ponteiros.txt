@@ -1,0 +1,17 @@
+$1.Ponteiros:@ Uma variavel, cujo R- Value eh um L-value de outra variavel.~
+$2.Vetores:@ 
+->xs[10]
+->xs eh um ponteiro pro primeiro elemento, e os proximos 10 sao separados sequencialmente
+-> *(xs+3)==xs[3]
+->xs==&xs~
+$3.Strings:@
+->char xs[10]
+-> Um vetor de char, so que com o terminador '\0'
+->Eh o que define a parada do "%s" ou do strlen e outras funcoes associadas a string~
+$4.Matrizes (2D):@ 
+->xs[i][j]== *(xs+j+i*j)
+->i linhas com j valores alocadas linearmente, apesar de ser uma matriz 2D ~
+$5.Valores de Vetores:@ 
+->Um vetor nao tem R-Value, ele eh valor azul. 
+->Nao se consegue acessar todos os elementos dele ao mesmo tempo.
+->Apenas dereferenciando ele com *(xs+offset) ou xs[offset], offset calculado a partir do primeiro elemento, elemento 0 ~

@@ -1,0 +1,14 @@
+1. Qual é a diferença entre struct e union. Dê exemplos de uso que identifiquem a necessidade dos dois construtores de tipos.
+
+Um struct usa o construtor E, onde todos os seus campos são obrigatórios para sua construção, e necessariamente alocados. O union usa o construtor OU, 
+e trata de dados que carregam signifidos similares, mas de natureza incompatível. Como, por exemplo, um número referente à identidade. Ele pode 
+OU ser o RG OU o CPF OU qualquer outro dado. A resposta interna do sistema a cada um desses números deve ser diferente, pois apesar deles servirem
+para identificar um indivíduo(que pode ser representado com um struct com seus campos obrigatórios como gênero, idade, e nesse caso identidade), 
+o CPF e RG referem-se a corpos de dados completamente diferentes. Num union, a existência de um campo necessariamente exclui a possibilidade dos outros,
+mas num struct, todos são necessários. Seguindo esse exemplo, não faz sentido tratar o CPF da pessoa como o RG, mas ela obrigatoriamente tem uma idade e 
+gênero. 
+
+3.O que é união discriminada e por que ela é necessária?
+A união discriminada é quando, ao definir uma union, guarda-se qual atributo foi definido. Ela é necessária para evitar impossibilidades lógicas 
+no sentido de referenciar um atributo que foi excluido pelo uso de outro. Por exemplo, tentar usar o CPF de um usuário que registrou o seu RG.
+Em C, é geralmente feito isso transformando a union numa struct com um campo  int arbitrariamente numerado para representar cada classe, junto com a union principal.

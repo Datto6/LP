@@ -1,0 +1,11 @@
+O que é um tipo de dados? 
+    Um tipo de dado se refere ao conjunto ao qual o dado pertence. Cada conjunto 
+    tem suas respectivas propriedades como: tamanho máximo de bits, operações possíveis,
+    usos. Remete ao uso fundamental daquele tipo de dado. 
+Para que servem os tipos?
+    Os tipos servem para ajudar no uso mais otimizado de memória e execução mais rápida:
+    por exemplo, numa linguagem onde o tipo já está bem definido e permanente,
+    não é preciso armazenar uma TAG com o tipo junto com o dado, e portanto 
+    salva-se tanto memória como é uma leitura a menos. 
+    Também ajuda na documentação, onde o uso da variável é quase implícito ao olhar
+    seu tipo, o que logo ajuda na sua boa manutenção e uso, evitando bugs futuros. 

@@ -1,0 +1,11 @@
+Considerando o terminador \0, que cuidados são necessários ao lidar com strings e arquivos em C...
+... ao escrever uma string para um arquivo?
+
+Ao escrever uma string para um arquivo, deve-se lembrar de não escrever o terminador,
+que resultaria num "NULL" dentro do arquivo. Efetivamente, ele não é uma coisa que deve 
+ser transportada junto para o arquivo.
+
+... ao ler uma string de um arquivo?
+Ao ler uma string de um arquivo, deve-se lembrar de fazer o contrário, de justamente inserir o terminador \0. 
+Se não, o texto lido de arquivo seria só um vetor de inteiros char, e as funcionalidades de string não funcionariam.
+A não ser que ele já esteja lá, o que é improvável de acontecer num arquivo de texto cujo propósito é ser legível. 

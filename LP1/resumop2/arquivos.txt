@@ -1,0 +1,51 @@
+$1.FILE*:@ FILE eh um tipo abstrato, um struct definido pelo stdio.h, que se refere a um arquivo no sistema.
+Nao mexemos com arquivos concretamente, apenas com funcoes abstratas, porque a memoria com a qual mexemos eh apenas a RAM. ~
+
+$2.fopen:@  FILE *fopen(const char *restrict path, const char *restrict mode)
+Primeiro especifica a path pro arquivo, podendo ser relativa ou absoluta, e o modo. 
+Ele cria a estrutura FILE, e retorna um ponteiro para essa estrutura. ~
+
+$3.Necessidade:@ Bom, precisamos de informacao permanente, ate quando um programa para de executar ou o computador 
+eh desligado. ~
+
+$4.Modos de fopen:@ "rb" e "rb+": Apenas leitura em binario e leitura e escrita em binario
+"wb" "wb+": Apenas escrita em binario, e leitura e escrita em binario, mas antes de abrir o arquivo "wb+" trunca o arquivo todo.
+            Sobre escreve os conteudos antigos 
+"ab" "ab+": Apenas escrita em binario, mas de forma de append. "ab+" inclui leitura tambem. 
+"r" "w" "a" e idem +: Idem, so que apenas para char~
+
+$5.fread:@ size_t fread(&entrada, size_t tamanho, size_t numero, FILE * arquivo) 
+-> leitura em arquivo X de um numero Y de tipos de tamanho Z, que sao armazenados no enderedo de entrada dado por &entrada
+->O valor de retorno de fread eh o numero de items lidos com sucesso. Percebe-se que num fread lendo 1, 0 significa erro de leitura
+->Mexendo com numero de itens lidos em numero e dando um &entrada vetor da p preencher vetor sem loops
+->Move a agulha de leitura/escrita do arquivo numero vezes~
+
+$6.fwrite:@ size_t fwrite(const void *entrada, size_t tamanho, size_t numeromemb, FILE *arquivo)
+-> Escrita em um arquivo dado no FILE* de numeromemb numero de elementos de tamanho size_t tamanho, pegos dereferenciando entrada
+->O valor de retorno eh o numero de valores escritos com sucesso
+->Mesma coisa que o fread, consigo escrever varios elementos sem usar iteracao, so passando um vetor em entrada botando bastante em numeromemb
+->Move a agulha de leitura/escrita do arquivo numero vezes~
+
+$7.fputc:@ int fputc(int char, FILE *pointer)
+->Escreve um char no arquivo pointer
+->Retorna o char caso foi escrito corretamente, e EOF caso falha. Por isso a entrada e a saida sao int
+->int porque caso saia de range de 0-255 do char, vira int e vira erro. EOF==-1, porque char nao tem negativo, eh unsigned 0-255
+->Move a agulha de leitura/escrita do arquivo +1 p frente~
+
+$8.fgetc:@ int fgetc(FILE *pointer)
+->Le um char no arquivo pointer
+->Retorna o char lido no arquivo, na atual agulha do FILE*, e EOF caso a leitura n deu certo
+->Tambem move a agulha de leitura/escrita do arquivo +1 p frente  ~
+
+$9.fseek:@ int fseek(FILE *pointer, long int offset, int position)
+->Bota a agulha de leitura do arquivo na posicao offset+position
+->Position pode ser SEEK_SET, SEEK_END, ou SEEK_CUR, inicio, fim, posicao atual respectivamente
+->Pointer eh um ponteiro pro arquivo ~
+
+$10.ftell:@ long ftell(FILE *stream)
+->Retorna o long posicao da agulha no arquivo atual
+->Retorna -1 se erro ocorre, e so ocorre erro se tiver em posicao menor que o inicio do arquivo
+->Se tiver passado do final do arquivo, vai falar coisa errada, mas nao da p saber
+->Da p saber tamanho de arquivo usando fseek ate SEEK_END com offset 0 e depois ftell, mas se fizer SEEK_END +100 vai dar o tamanho do arquivo errado~
+
+$11.EOF:@ EOF==-1 : acontece pois ele sai do limite de int, que vai de 0-255, entao chegou ao final de arquivo ou deu erro.~

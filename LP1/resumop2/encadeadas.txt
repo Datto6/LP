@@ -1,0 +1,5 @@
+$1.Justificativa:@ As vezes, realmente nao da pra prever quanto de espaco voce vai precisar para uma lista, para declarar ela sequencialmente~
+$2.Tamanho:@ Como o ponteiro sao 8 bytes, voce acaba precisando mais memoria. Se for uma lista com so int, triplica.
+OBS: Porque ponteiro? Porque PC precisa saber de tamanho fixo de um No. Em haskell por exemplo, definicao de list encadeada eh recursiva~
+$3.Vantagens:@ Bem mais flexivel na hora de insercao e remocao.~
+$4.Desvantagens:@ A busca e muito mais dificil, send O(n) ate se for ordenada. Maior uso de memoria tbm. ~

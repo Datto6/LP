@@ -1,0 +1,9 @@
+$1.Definicao:@ Um tipo de dado refere as suas propriedades, o que voce consegue fazer com ele e 
+a natureza do que ele contem. Se trata de um conjunto. ~
+$2.Inteiro:@ Numeros que vao ate aproximadamente 2 bilhoes. Ocupam 4 bytes, ou seja, 32 bits. Podem ser long int (ocupando 8 bytes) e ser unsigned ou signed~
+$3.Char:@ Numeros que vao de -128 ate 127, ou 0 ate 255. Ocupam 1 byte, 
+e sao geralmente usados para simbolizar caracteres pela tabela ASCII. Nao deixam de ser numeros~
+$4.Ponteiro:@ Sao um L value, seu conteudo e um endereco de  outra variavel. Sua declaracao eh int*. Acesso seu valor ao qual o endereco se refere com *p 
+e atribuo o endereco de um R- Value com p=&x;, x sendo um R- Value ~
+$5.R-Value:@ Os valores na direita da declaracao. Sao tangiveis e reais. Numeros, caracteres. ~
+$6.L-Value:@ Os valores na esquerda da declaracao. Podem ser enderecos, ou simplesmente nomes. Valores azuis. ~

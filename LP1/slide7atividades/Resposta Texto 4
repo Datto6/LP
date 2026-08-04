@@ -1,0 +1,16 @@
+Explique com suas próprias palavras as diferentes abordagens dos exercícios 2 e 3.
+
+Enquanto no exercício 2, a função retorna um R value para preencher o struct, no exercício 3 há apenas 
+a manipulação de uma variável externa à função, cujo único meio de acesso é o ponteiro passado como parâmetro. 
+Desse modo, a função 3 não retorna nenhum valor, sim modifica memória externa.
+
+Qual abordagem você prefere usar e porquê?
+
+Eu prefiro usar a abordagem 2, por ser mais legível, minimiza o erro do programador na hora de passar 
+o ponteiro como parâmetro e errar, e a diferença em tempo operacional e memória gasta ser provavelmente muito pouca.
+
+Na sua opinião quais são as diferenças de uso de memória e velocidade nas duas abordagens?
+
+Enquanto na função 2 cria-se um outro struct local, preenche-se ele, e ele é retornado na função 
+e seus dados copiados numa atribuição, a função 3 mexe direto na variável desejada, que deve ser preenchida. 
+Logo, a função 3 é mais eficiente e mais rápida, a custo de uma legibilidade menor.

@@ -1,0 +1,18 @@
+    • Qual é a diferença entre tipagem estática e dinâmica?
+Tipagem estática, no contexto de programação, se refere à prática de sempre declarar o tipo da variável ao inicializá-la. 
+Tipagem dinâmica é contrário, onde o programador simplesmente atribui à variável qualquer valor, sem precisar especificar o tipo de valor antes. 
+    • Dê exemplos de linguagens que usem tipagem estática e exemplos de linguagens que usem tipagem dinâmica.
+Linguagens que usam tipagem estática incluem C, C++, Java, Fortran, Haskell, e linguagens com tipagem dinâmica incluem Python, Lua, PHP, Javascript
+    • Por quê uma linguagem com tipagem estática é tipicamente mais rápida do que uma com tipagem dinâmica? Justifique usando um exemplo.
+Uma linguagem com tipagem dinâmica, toda vez que vai acessar ou operar um variável, primeiro precisa checar o TAG da variável para ver 
+ qual o seu tipo, depois checar se pode fazer a operação desejada. Esse processo, mesmo que rápido, é repetido pelo computador quase que em 
+ todo comando do programa, pois fundamentalmente um código mexe com variáveis declarados, possívelmente milhões de vezes. Além do fato que 
+ reservar um espaço a mais para a etiqueta sobre o tipo, e assumir sempre um tipo que usa mais bits ocupa mais memória, possívelmente
+ demandando mais do computador, fazendo do processo ainda mais lento. 
+   Com a tipagem estática, esse processo de checagem dos tipos já é 
+ feito pelo programador e resolvido imediatamente na compilação, além de economizar memória, pois o programador pode usar tipos de dados
+ mais econômicos e especializados ao uso do variável, dado seu contexto. 
+Por exemplo, ao declarar uma lista em python e colocar 1000 números, essa lista ocuparia no mínimo 24000 bytes, 
+pois python declara 24 bytes para o tipo, sem adicionar mais 4 ou 8 equivalentes à classe int. Em C, essa lista ocuparia no
+máximo 8000 bytes, um terço do mínimo de python. Assumindo que o computador demore 1 ms para processar o TAG e fazer a operação 
+seguinte, a diferença entre tempo operacional, para fazer o mesmo programa, seria de 1 segundo. 

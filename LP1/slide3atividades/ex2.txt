@@ -1,0 +1,14 @@
+    • O que você espera que aconteça ao compilar o programa? Por quê?
+Eu espero que dê um erro ao compilar o programa, pois há uma operação entre dois tipos de dados incompatíveis, 
+um inteiro(int) e um string(vetor de char). Como é impossível subtrair um vetor de caracteres de um inteiro, 
+era de se esperar que compilar o programa causaria um erro.
+    • Quais são os tipos dos operandos na operação de subtração?
+Os tipos de operandos na operação de subtração são inteiros ou números reais, respectivamente
+equivalentes a int e float/double. No caso de uma subtração entre int e float, o int é promovido 
+a um float(pois o float guarda mais informação)
+    • Transcreva a mensagem de erro de compilação e a explique.
+Error: invalid operands to binary – (have ‘int’ and ‘char *’)
+3 | printf(“Soma =%d\n”, 10- “10”);
+Basicamente, está dizendo que os operandos escolhidos para a operação binária(entre 2 dados) 
+do tipo -(subtração) são inválidos. Ou seja, uma subtração binária entre int e char não é aceita 
+na linguagem C. 

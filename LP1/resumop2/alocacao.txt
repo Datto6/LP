@@ -1,0 +1,25 @@
+$1.Malloc:@ void* malloc(size_t size)
+->Retorna um ponteiro void*, e nao exige typecast, o proprio C ja converte
+-> Ele aloca um  amontado de size bytes SEM NENHUM IDENTIFICADOR e retorna um ponteiro pra essa posicao~
+
+$2.free:@ void free(void * ptr) - Nao retorna nada, mas sinaliza pro malloc que a memoria que o ptr estava se referindo esta livre p ser usada~
+$3.Pilha:@ A parte que o compilador cuida da memoria, dinamica, regida pela pilha de execucao. No final da memoria.~
+
+$4.Heap:@ A parte que voce pode manipular com malloc e free, cresce no sentido contrario da pilha, e ta na base da memoria, logo depois da parte estatica~
+
+$5.Ponteiro Pendente:@ Voce liberou o conteudo do heap a qual esse ponteiro se refere(fez o free), e usar o mesmo ponteiro sem mudar seu valor agora eh invalido, 
+pois o malloc pode ter usado ele pra outra parada. Ou voce nao usa mais o ptr, ou re atribui outro endereco a ele~
+
+$6.Memory Leak:@ Suponha que voce fez ptr=malloc(500) e depois fez ptr=&x => voce perdeu esses 500 bytes, porque os 500 bytes na heap nao tinham forma de serem
+acessados senao o endereco dentro de ptr.Dessa forma, ter cuidado ao mexer com dados dinamciamente alocados. ~
+
+$7.Boas Praticas:@ Sempre associar um free a um malloc, nem que seja escrever os dois seguidos e continuar programando entre os dois, empurrando o free para baixo.
+Em geral, nunca mais usar um ptr depois do free() eh uma boa, a nao ser que voce reuse aquele variavel para OUTRO negocio ~
+
+$8.NULL:@
+->NULL==0, ou seja, o compilador C reserva esse espaco da memoria como endereco invalido
+->Eh 0 porque para ter negativo cortaria os valores em metade, enderecos sao long int unsigned, size_t
+->O NULL eh um union entre void* e o ponteiro p tipo que voce quer, e o C faz esse typecast/abreviacao p vc
+    ->union entre struct No* OU void*
+->Essa abreviacao do union faz a tipagem mais insegura, por exemplo, posso acessar um valor especial(NULL) sem saber
+->0* da segfault ~
