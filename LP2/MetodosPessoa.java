@@ -24,4 +24,5 @@ public interface MetodosPessoa{
     public boolean get_mae(Pessoa mae);
 
     private int idade();
+    public void status();
 }

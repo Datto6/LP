@@ -3,10 +3,10 @@ import java.time;
 public class Pessoa implements MetodosPessoa {
     private String nome,sobrenome;
     private String genero;
-    private LocalDate data-nascimento;
+    private LocalDate data;
     private double peso,altura;
     private Pessoa pai, mae; //posso fazer essa abreviacao
-
+    public static int criados;
     public String get_nome(){
         return nome; //pode retornar nulo ou mal definido se ainda nao foi inicializado
     }
@@ -64,12 +64,12 @@ public class Pessoa implements MetodosPessoa {
 
     }
     public boolean set_data_nascimento(LocalDate data){
-        if (data!=null){
+        if (data!=null && data.){
             this.data=data;
             return true;
         }
         else{
-            System.out.println("Erro, data nula dada");
+            System.out.println("Erro, valor nulo dado");
             return false;
         }
     }
@@ -113,7 +113,7 @@ public class Pessoa implements MetodosPessoa {
             return true;
         }
         else{
-            System.out.println("Erro, pai nulo dado");
+            System.out.println("Erro, valor nulo dado");
             return false;
         }
     }
@@ -125,9 +125,37 @@ public class Pessoa implements MetodosPessoa {
             return true;
         }
         else{
-            System.out.println("Erro, mae nulo dado");
+            System.out.println("Erro, valor nulo dado");
             return false;
         }
     }
-    private int idade();
+    private int idade(){
+        LocalDate hoje=LocalDate.now();
+        Duration tempo_vida=Duration.between(data,hoje);
+        long dias=tempo_vida.toDays();
+        int anos=(int) dias/365;
+        return anos;
+    }
+    String toString(){
+
+    }
+    public Pessoa(){
+        Pessoa.criados++;
+    }
+    public Pessoa(String nome){
+        this.nome=nome;
+        Pessoa.criados++;
+    }
+    public Pessoa(String nome, String sobrenome, String genero,LocalDate data,double peso, double altura, Pessoa pai, Pessoa mae){
+        this.nome=nome;
+        this.sobrenome=sobrenome;
+        this.genero=genero; 
+        this.data=data;  //todos esses passam por endereco, mas como sao imutaveis nao eh problema
+        this.peso=peso;
+        this.altura=altura;
+        this.pai=pai;
+        this.mae=mae;
+        Pessoa.criados++;
+    }
+
 }
