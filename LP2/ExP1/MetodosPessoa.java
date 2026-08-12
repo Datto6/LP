@@ -26,5 +26,5 @@ public interface MetodosPessoa{
     private int idade();
     public void status();
     public static int feitos();
-    private void aicionar_criado();
+    private void adicionar_criado();
 }

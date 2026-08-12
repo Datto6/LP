@@ -1,4 +1,6 @@
-import java.time;
+import java.time.LocalDate;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 public class Pessoa implements MetodosPessoa {
     private String nome,sobrenome;
@@ -8,41 +10,43 @@ public class Pessoa implements MetodosPessoa {
     private Pessoa pai, mae; //posso fazer essa abreviacao
     public static int criados=0;
     private Random rand=new Random();
-    private String[] ATIVIDADES={"Comendo","Dormindo", "Jogando", "Lendo", "Estudando", "Vagabundando"}
+    private String[] ATIVIDADES={"Comendo","Dormindo", "Jogando", "Lendo", "Estudando", "Vagabundando"};
     public String get_nome(){
         return nome; //pode retornar nulo ou mal definido se ainda nao foi inicializado
     }
     public boolean set_nome(String nome){
+        //retorna  true se foi executada com sucesso, falso caso contrário
         if (nome!=null && nome.length()<=50){
             this.nome=nome;
             return true;
         }
-        else if{nome==null}{
+        else if(nome==null){
             System.out.println("Erro, nome nulo vazio dado");
-            return false;
         }
-        else if(nome.length()>50){
+        else{
             System.out.println("Erro, excedeu limite de caracteres");
-            return false;
         }
+        return false;
     }
 
     public String get_sobrenome(){
         return sobrenome; //pode retornar nulo ou mal definido se ainda nao foi inicializado
     }
     public boolean set_sobrenome(String sobrenome){
+        //retorna  true se foi executada com sucesso, falso caso contrário
         if (sobrenome!=null && sobrenome.length()<=50){
             this.sobrenome=sobrenome;
             return true;
         }
         else if{sobrenome==null}{
             System.out.println("Erro, nome nulo dado");
-            return false;
+
         }
-        else if(sobrenome.length()>50){
+        else{
             System.out.println("Erro, excedeu limite de caracteres");
             return false;
         }
+        return false;
     }
 
     public String get_genero(){
@@ -51,32 +55,42 @@ public class Pessoa implements MetodosPessoa {
     public boolean set_genero(String genero){ //Boolean da se executou com sucesso ou nao
         if (genero!=null && genero.length()<=50){
             this.genero=genero;
+            return true;
         }
         else if{genero==null}{
             System.out.println("Erro, nome nulo dado.");
-            return false;
         }
-        else if(genero.length()>50){
+        else{
             System.out.println("Erro, excedeu limite de caracteres");
-            return false;
         }
+        return false;
     }
 
     public LocalDate get_data_nascimento(){
         return this.data;
     }
-    public boolean set_data_nascimento(LocalDate data){
-        if (data!=null && data.){
+    public boolean set_data_nascimento(LocalDate data){ 
+        //retorna  true se foi executada com sucesso, falso caso contrário
+        LocalDate hoje=LocalDate.now();
+        if (data!=null && data.getYear()>=1900 && data.isBefore(hoje.plusDays(1))){ //Depois de 1900 e no maximo hoje
             this.data=data;
             return true;
         }
-        else{
+        else if(data==null){
             System.out.println("Erro, valor nulo dado");
-            return false;
         }
+        else if (data.getYear()<1900){
+            System.out.println("Erro, pessoa antes de 1900.");
+        }
+        else if(!data.isBefore(hoje.plusDays(1))){
+            System.out.println("Erro, pessoa que ainda não nasceu(data de nascimento no futuro)");
+        }
+        return false; //se chegou aqui, um dos 3 erros aconteceu
     }
 
-    public double get_peso();
+    public double get_peso(){
+        return peso;
+    }
     public boolean set_peso(double peso){
         if (peso>0 && peso<=400){
             this.peso=peso;
@@ -92,7 +106,9 @@ public class Pessoa implements MetodosPessoa {
         }
     }
 
-    public double get_altura();
+    public double get_altura(){
+        return altura;
+    }
     public boolean set_altura(double altura){
         if (altura>0 && altura<=3){
             this.altura=altura;
@@ -169,17 +185,23 @@ public class Pessoa implements MetodosPessoa {
         Peso:%.2f, Altura: %.2f
         Nome e Sobrenome do Pai: %s %s
         Nome e Sobrenome da Mãe: %s %s
+        OBS: 0.0 implica valores não inicializados 
         """,
         nome_usado,sobrenome_curr,gen_usado,idade(),get_peso(),get_altura(),nome_pai,sobrenome_pai,nome_mae,sobrenome_mae)
         return output;
     }
-    void adicionar_criado(){
+    //Metodos de checar quantos objetos foram criados
+    private void adicionar_criado(){
         Pessoa.criados++;
+    }
+    public static int feitos(){
+        return Pessoa.criados;
     }
     public String status(){
         int indice=rand.nextInt(6); //indice aleatorio de 0 a 5
         return ATIVIDADES[indice]; //atividade aleatoria
     }
+    //Construtores
     public Pessoa(){
         adicionar_criado();
     }
