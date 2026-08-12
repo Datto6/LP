@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 public interface MetodosPessoa{
     public String get_nome();
     public boolean set_nome(String nome);
@@ -21,10 +22,10 @@ public interface MetodosPessoa{
     public boolean set_pai(Pessoa pai);
 
     public Pessoa get_mae();
-    public boolean get_mae(Pessoa mae);
+    public boolean set_mae(Pessoa mae);
 
-    private int idade();
-    public void status();
-    public static int feitos();
-    private void adicionar_criado();
+    // private int idade();
+    public String status();
+    // public static int feitos();
+    // private void adicionar_criado(); não pode ter métodos privados ou static em interface sem enunciar o corpo, porque?
 }

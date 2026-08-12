@@ -1,14 +1,13 @@
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.format.DateTimeFormatter;
 import java.util.Random;
+import java.time.Period;
 public class Pessoa implements MetodosPessoa {
-    private String nome,sobrenome;
-    private String genero;
+    private String nome,sobrenome,genero;
     private LocalDate data;
     private double peso,altura;
     private Pessoa pai, mae; //posso fazer essa abreviacao
-    public static int criados=0;
+    private static int criados=0;
     private Random rand=new Random();
     private String[] ATIVIDADES={"Comendo","Dormindo", "Jogando", "Lendo", "Estudando", "Vagabundando"};
     public String get_nome(){
@@ -38,7 +37,7 @@ public class Pessoa implements MetodosPessoa {
             this.sobrenome=sobrenome;
             return true;
         }
-        else if{sobrenome==null}{
+        else if(sobrenome==null){
             System.out.println("Erro, nome nulo dado");
 
         }
@@ -57,7 +56,7 @@ public class Pessoa implements MetodosPessoa {
             this.genero=genero;
             return true;
         }
-        else if{genero==null}{
+        else if(genero==null){
             System.out.println("Erro, nome nulo dado.");
         }
         else{
@@ -98,12 +97,11 @@ public class Pessoa implements MetodosPessoa {
         }
         else if (peso<=0){
             System.out.println("Erro, peso negativo ou zero.");
-            return false;
         }
         else if (peso>400){
             System.out.println("Erro, peso acima de 400 kg, tem certeza desse valor?");
-            return false;
         }
+        return false; 
     }
 
     public double get_altura(){
@@ -116,12 +114,11 @@ public class Pessoa implements MetodosPessoa {
         }
         else if (altura<=0){
             System.out.println("Erro, altura negativa ou zero");
-            return false;
         }
         else if (altura>3){
             System.out.println("Erro, altura acima de 3 metros, tem certeza desse valor?");
-            return false;
         }
+        return false;
     }
 
     public Pessoa get_pai(){
@@ -141,7 +138,7 @@ public class Pessoa implements MetodosPessoa {
     public Pessoa get_mae(){
         return mae;
     }
-    public boolean get_mae(Pessoa mae){
+    public boolean set_mae(Pessoa mae){
         if (mae!=null){
             this.mae=mae;
             return true;
@@ -153,41 +150,51 @@ public class Pessoa implements MetodosPessoa {
     }
     private int idade(){
         LocalDate hoje=LocalDate.now();
-        Duration tempo_vida=Duration.between(data,hoje);
-        long dias=tempo_vida.toDays();
-        int anos=(int) dias/365;
+        if (data==null){
+            return 0;
+        }
+        Period tempo_vida = Period.between(data, hoje);
+        int anos = tempo_vida.getYears();
         return anos;
     }
-    String toString(){
+    public String toString(){
         String nome_usado=(get_nome()==null) ? "Vazio" : get_nome();
         String sobrenome_curr=(get_sobrenome()==null) ? "Vazio" : get_sobrenome();
         String gen_usado=(get_genero()==null) ? "Vazio" : get_genero();
-        Pessoa pai_curr=get_pai()
-        String nome_pai, sobrenome_pai;
+
+        Pessoa pai_curr=get_pai();
+        String nome_pai=new String();
+        String sobrenome_pai=new String();
 
         if (pai_curr!=null){
             nome_pai=pai_curr.get_nome(); //poderia fazer new String aqui, mas é seguro pois strings são imutáveis
             sobrenome_pai=pai_curr.get_sobrenome();
         }
+        nome_pai=(nome_pai==null) ? "Vazio" : nome_pai;
+        sobrenome_pai=(sobrenome_pai==null) ? "Vazio" : sobrenome_pai;
 
         Pessoa mae_curr=get_mae();
-        String nome_mae, sobrenome_mae;
+        String nome_mae=new String();
+        String sobrenome_mae=new String();
 
         if(mae_curr!=null){
-            String nome_mae=mae_curr.get_nome();
-            String sobrenome_mae=mae_curr.get_sobrenome();
+            nome_mae=mae_curr.get_nome();
+            sobrenome_mae=mae_curr.get_sobrenome();
         }
+        nome_mae=(nome_mae==null) ? "Vazio" : nome_mae;
+        sobrenome_mae=(sobrenome_mae==null) ? "Vazio" : sobrenome_mae; //caso algum for nulo, substituir por "vazio"
 
         String output=String.format("""
         Nome da Pessoa: %s , Sobrenome:%s
         Genero: %s
         Idade: %d
-        Peso:%.2f, Altura: %.2f
+        Peso:%.2f kg, Altura: %.2f m
         Nome e Sobrenome do Pai: %s %s
         Nome e Sobrenome da Mãe: %s %s
+        Status: %s
         OBS: 0.0 implica valores não inicializados 
         """,
-        nome_usado,sobrenome_curr,gen_usado,idade(),get_peso(),get_altura(),nome_pai,sobrenome_pai,nome_mae,sobrenome_mae)
+        nome_usado,sobrenome_curr,gen_usado,idade(),get_peso(),get_altura(),nome_pai,sobrenome_pai,nome_mae,sobrenome_mae,status());
         return output;
     }
     //Metodos de checar quantos objetos foram criados
@@ -211,14 +218,14 @@ public class Pessoa implements MetodosPessoa {
     }
     public Pessoa(String nome, String sobrenome, String genero,LocalDate data,double peso, double altura, Pessoa pai, Pessoa mae){
         adicionar_criado();
-        this.nome=nome;
-        this.sobrenome=sobrenome;
-        this.genero=genero; 
-        this.data=data;  //todos esses passam por endereco, mas como sao imutaveis nao eh problema
-        this.peso=peso;
-        this.altura=altura;
-        this.pai=pai;
-        this.mae=mae;
+        set_nome(nome);
+        set_sobrenome(sobrenome);
+        set_genero(genero);
+        set_data_nascimento(data);
+        set_peso(peso);
+        set_altura(altura);
+        set_pai(pai);
+        set_mae(mae); 
     }
 
 }
