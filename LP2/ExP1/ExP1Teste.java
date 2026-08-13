@@ -1,6 +1,7 @@
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Random;
+import java.util.Scanner;
 public class ExP1Teste{
     public static void main(String[] args){
         String [] BANCO_NOMES={
@@ -21,19 +22,35 @@ public class ExP1Teste{
             System.exit(0);
         }
         Random rand=new Random();
-        int num_pessoas=Integer.parseInt(args[0]);
-        Pessoa[] pessoas= new Pessoa[num_pessoas];
-
-        if (num_pessoas>=3){
-            pessoas[0]=new Pessoa();
-            pessoas[1]=new Pessoa("John Java");
-            pessoas[2]=new Pessoa("Peter", "Java","Masculino",LocalDate.of(2002, Month.JANUARY, 8),75.67, 1.85,pessoas[1],pessoas[0]);
-            System.out.println(pessoas[0].toString());
-            System.out.println(pessoas[1].toString());
-            System.out.println(pessoas[2].toString());
+        int num_pessoas;
+        if(args[0].matches("\\d+")){ //regex para ver se o string é apenas digitos
+            num_pessoas=Integer.parseInt(args[0]);
+        }
+        else{
+            Scanner entrada=new Scanner(System.in);
+            System.out.println("Argumento inválido, por favor digitar apenas um número.");
+            String linha=entrada.nextLine();
+            while(!linha.matches("\\d+")){ //enquanto linha não é apenas digitos
+                System.out.println("Argumento inválido, por favor digitar apenas um número.");
+                linha=entrada.nextLine();
+            }
+            num_pessoas=Integer.parseInt(linha);
         }
 
+        Pessoa[] pessoas= new Pessoa[num_pessoas];
 
+        if (num_pessoas>=1){
+            pessoas[0]=new Pessoa();
+            System.out.println(pessoas[0].toString());
+        }
+        if(num_pessoas>=2){
+            pessoas[1]=new Pessoa("John Java");
+            System.out.println(pessoas[1].toString());
+        }
+        if (num_pessoas>=3){
+            pessoas[2]=new Pessoa("Peter", "Java","Masculino",LocalDate.of(2002, Month.JANUARY, 8),75.67, 1.85,pessoas[1],pessoas[0]);
+            System.out.println(pessoas[2].toString());
+        }
         for(int i=0;i<num_pessoas-3;i++){ 
             //para nao sobre escrever os primeiros 3 usando os construtores difereentes, adicionamos 3 ao indice i quando 
             Pessoa generica=new Pessoa();
