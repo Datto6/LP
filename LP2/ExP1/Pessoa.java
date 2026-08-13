@@ -151,20 +151,20 @@ public class Pessoa implements MetodosPessoa {
     private int idade(){
         LocalDate hoje=LocalDate.now();
         if (data==null){
-            return 0;
+            return -1;
         }
         Period tempo_vida = Period.between(data, hoje);
         int anos = tempo_vida.getYears();
         return anos;
     }
     public String toString(){
-        String nome_usado=(get_nome()==null) ? "Vazio" : get_nome();
-        String sobrenome_curr=(get_sobrenome()==null) ? "Vazio" : get_sobrenome();
-        String gen_usado=(get_genero()==null) ? "Vazio" : get_genero();
+        String nome_str=(get_nome()==null) ? "Vazio" : get_nome();
+        String sobrenome_str=(get_sobrenome()==null) ? "Vazio" : get_sobrenome();
+        String gen_str=(get_genero()==null) ? "Vazio" : get_genero();
 
         Pessoa pai_curr=get_pai();
-        String nome_pai=new String();
-        String sobrenome_pai=new String();
+        String nome_pai=null; //inicializar vazio
+        String sobrenome_pai=null;
 
         if (pai_curr!=null){
             nome_pai=pai_curr.get_nome(); //poderia fazer new String aqui, mas é seguro pois strings são imutáveis
@@ -174,8 +174,8 @@ public class Pessoa implements MetodosPessoa {
         sobrenome_pai=(sobrenome_pai==null) ? "Vazio" : sobrenome_pai;
 
         Pessoa mae_curr=get_mae();
-        String nome_mae=new String();
-        String sobrenome_mae=new String();
+        String nome_mae=null; //inicializar vazio
+        String sobrenome_mae=null;
 
         if(mae_curr!=null){
             nome_mae=mae_curr.get_nome();
@@ -184,17 +184,20 @@ public class Pessoa implements MetodosPessoa {
         nome_mae=(nome_mae==null) ? "Vazio" : nome_mae;
         sobrenome_mae=(sobrenome_mae==null) ? "Vazio" : sobrenome_mae; //caso algum for nulo, substituir por "vazio"
 
+        String peso_str=(peso==0.0) ? "Vazio/Inválido" : String.format("%.2f",peso); //convertendo em string
+        String altura_str=(altura==0.0) ? "Vazio/Inválido" :  String.format("%.2f",altura);
+        int idade=idade();
+        String idade_str=(idade==-1) ? "Sem data de nascimento registrada" : Integer.toString(idade);
         String output=String.format("""
-        Nome da Pessoa: %s , Sobrenome:%s
+        Nome da Pessoa: %s, Sobrenome:%s
         Genero: %s
-        Idade: %d
-        Peso:%.2f kg, Altura: %.2f m
-        Nome e Sobrenome do Pai: %s %s
-        Nome e Sobrenome da Mãe: %s %s
+        Idade: %s
+        Peso:%s kg, Altura: %s m
+        Nome e Sobrenome do Pai: %s, %s
+        Nome e Sobrenome da Mãe: %s, %s
         Status: %s
-        OBS: 0.0 implica valores não inicializados 
         """,
-        nome_usado,sobrenome_curr,gen_usado,idade(),get_peso(),get_altura(),nome_pai,sobrenome_pai,nome_mae,sobrenome_mae,status());
+        nome_str,sobrenome_str,gen_str,idade_str,peso_str,altura_str,nome_pai,sobrenome_pai,nome_mae,sobrenome_mae,status());
         return output;
     }
     //Metodos de checar quantos objetos foram criados
