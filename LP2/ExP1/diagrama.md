@@ -1,5 +1,5 @@
-plantuml 
 @startuml
+
 +class Pessoa{
 -altura,peso : double
 -data : LocalDate
@@ -33,4 +33,5 @@ plantuml
 +toString() : String
 -adicionarCriado
 }
+
 @enduml
