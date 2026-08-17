@@ -33,8 +33,14 @@
 +set_mae(Pessoa mae) : boolean
 -idade() : void
 +toString() : String
--adicionarCriado
+-adicionar_criado()
+- static feitos() : int
++ Pessoa() 
++ Pessoa(String Nome)
++Pessoa(String: nome,sobrenome,genero, LocalDate : data, double: peso,altura, Pessoa: pai,mae)
 }
+
+@enduml
 
 @enduml
 ```
