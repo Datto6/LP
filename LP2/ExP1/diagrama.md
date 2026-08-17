@@ -9,6 +9,7 @@
 -pai,mae : Pessoa
 -nome,sobrenome,genero : String
 -ATIVIDADES : String[]
+- rand: Random()
 
 --Métodos--
 ..Getters..
@@ -32,6 +33,7 @@
 
 +set_peso(double peso) : boolean
 +set_altura(double altura) : boolean
+
 +set_pai(Pessoa pai) : boolean
 +set_mae(Pessoa mae) : boolean
 ..Outros..
@@ -45,6 +47,12 @@
 + Pessoa(String Nome)
 + Pessoa()
 }
+note right of Pessoa::pai,mae
+ Ambos são objetos Pessoa
+end note
+note right of Pessoa::set_nome
+Retornam true se operação foi bem sucedida
+end note 
 
 @enduml
 ```
