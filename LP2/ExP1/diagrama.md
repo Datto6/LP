@@ -3,44 +3,48 @@
 @startuml
 
 +class Pessoa{
+--Atributos--
 -altura,peso : double
 -data : LocalDate
 -pai,mae : Pessoa
--ATIVIDADES : String[]
 -nome,sobrenome,genero : String
+-ATIVIDADES : String[]
+
+--Métodos--
+..Getters..
 +get_nome() : String
-+set_nome(String nome): boolean
-
 +get_sobrenome() : String
-+set_sobrenome(String sobrenome): boolean
-
 +get_genero() : String
-+set_genero(String genero) : boolean
 
 +get_data_nascimento() : LocalDate
-+set_data_nascimento(LocalDate data) : boolean
 
 +get_peso() : double
-+set_peso(double peso) : boolean
-
 +get_altura() : double
-+set_altura(double altura) : boolean
 
 +get_pai() : Pessoa
-+set_pai(Pessoa pai) : boolean
-
 +get_mae() : Pessoa
+..Setters..
++set_nome(String nome): boolean
++set_sobrenome(String sobrenome): boolean
++set_genero(String genero) : boolean
+
++set_data_nascimento(LocalDate data) : boolean
+
++set_peso(double peso) : boolean
++set_altura(double altura) : boolean
++set_pai(Pessoa pai) : boolean
 +set_mae(Pessoa mae) : boolean
+..Outros..
 -idade() : void
 +toString() : String
 -adicionar_criado()
 - static feitos() : int
-+ Pessoa() 
-+ Pessoa(String Nome)
-+Pessoa(String: nome,sobrenome,genero, LocalDate : data, double: peso,altura, Pessoa: pai,mae)
-}
 
-@enduml
+..Construtores..
+ +Pessoa(String: nome,sobrenome,genero, LocalDate : data, double: peso,altura, Pessoa: pai,mae)
++ Pessoa(String Nome)
++ Pessoa()
+}
 
 @enduml
 ```
