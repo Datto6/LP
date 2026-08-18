@@ -25,7 +25,7 @@ skinparam note {
     FontSize 12
 }
 
-class Pessoa{
+class "<b>Pessoa</b>" as Pessoa {
 -- <b> Atributos </b> --
 -altura,peso : double
 -data : LocalDate
@@ -77,10 +77,12 @@ note right of Pessoa::set_nome
 Retornam true se operação foi bem sucedida
 end note
 
-legend bottom
-    +  Public
-    -  Private
-endlegend
+class "<b>Visibilidade</b>" as Visibility {
+    + Público
+    - Privado
+}
+
+Pessoa -[hidden]down- Visibility
 
 @enduml
 ```
