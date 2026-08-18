@@ -1,9 +1,32 @@
 ``` plantuml 
 
 @startuml
+skinparam backgroundColor ##090b14
 
-+class Pessoa{
---Atributos--
+skinparam class {
+    BackgroundColor #dbcd32
+    BorderColor #333333
+    FontColor #222222
+    FontName Arial
+    FontSize 14
+    AttributeFontColor #333333
+    AttributeFontName Arial
+    AttributeFontSize 13
+    MethodFontColor #333333
+    MethodFontName Arial
+    MethodFontSize 13
+}
+
+skinparam note {
+    BackgroundColor #c42404
+    BorderColor #D6B656
+    FontColor #090b14
+    FontName Arial
+    FontSize 12
+}
+
+class Pessoa{
+-- <b> Atributos </b> --
 -altura,peso : double
 -data : LocalDate
 -pai,mae : Pessoa
@@ -11,8 +34,8 @@
 -ATIVIDADES : String[]
 - rand: Random()
 
---Métodos--
-..Getters..
+-- <b> Métodos </b> --
+..<b> Getters </b>..
 +get_nome() : String
 +get_sobrenome() : String
 +get_genero() : String
@@ -24,7 +47,7 @@
 
 +get_pai() : Pessoa
 +get_mae() : Pessoa
-..Setters..
+.. <b> Setters </b>..
 +set_nome(String nome): boolean
 +set_sobrenome(String sobrenome): boolean
 +set_genero(String genero) : boolean
@@ -36,13 +59,13 @@
 
 +set_pai(Pessoa pai) : boolean
 +set_mae(Pessoa mae) : boolean
-..Outros..
+..<b>Outros</b>..
 -idade() : void
 +toString() : String
 -adicionar_criado()
 - static feitos() : int
 
-..Construtores..
+..<b>Construtores</b>..
  +Pessoa(String: nome,sobrenome,genero, LocalDate : data, double: peso,altura, Pessoa: pai,mae)
 + Pessoa(String Nome)
 + Pessoa()
@@ -52,7 +75,12 @@ note right of Pessoa::pai,mae
 end note
 note right of Pessoa::set_nome
 Retornam true se operação foi bem sucedida
-end note 
+end note
+
+legend bottom
+    +  Public
+    -  Private
+endlegend
 
 @enduml
 ```
