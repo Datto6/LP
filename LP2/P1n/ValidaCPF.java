@@ -1,54 +1,80 @@
 public class ValidaCPF{
     public static Boolean isCPF(String CPF) {
         // considera-se erro CPF"s formados por uma sequencia de numeros iguais
-        if (CPF.matches("(\\d{11})|(\\d{3}[.]\\d{3}[.]\\d{3}([-]|[/])\\d{2})")){
+        int dig10,dig11;
+        int num,sum
+        if CPF.matches("\\d{11}"){ //formato de 11 digitos bruto
+            dig10=Character.getNumericValue(CPF.charAt(9)); //numeros reais
+            dig11=Character.getNumericValue(CPF.charAt(10));
+            num;
+            peso=10;
+            sm=0;
+            for (i=0; i<9; i++) {
+                num =Character.getNumericValue(CPF.charAt(i)); //converte char i em numero
+                sm = sm + (num * peso);
+                peso = peso - 1;
+            }
+            int r=11-(sm%11); //digito de verificacao numero 1 
+            if (r==10 || r==11){
+                r=0;
+            }
+            if (r!=dig10){
+                return false;
+            }
+            sm=0
+            peso=11;
+            for (i=0; i<10; i++) {
+                num =Character.getNumericValue(CPF.charAt(i)); //convert char i em numero
+                sm = sm + (num * peso);
+                peso = peso - 1; //decrementa peso
+            }
+            int r2=11-(sm%11);
+            if (r2==10 || r2==11){
+                r2=0;
+            }
+            if (r2!=dig11){
+                return false;
+            }
             return true;
         }
-        else{
-            return false;
+        if CPF.matches("\\d{3}[.]\\d{3}[.]\\d{3}([-]|[/])\\d{2})"){ //ddd.ddd.ddd(- ou /)dd
+            dig10=Character.getNumericValue(CPF.charAt(12)); //numeros reais do string 
+            dig11=Character.getNumericValue(CPF.charAt(13));
+            num;
+            peso=10;
+            sm=0;
+            for (i=0; i<12; i++) {
+                if(CPF.charAt(i)!='.' && CPF.charAt(i)!='/' && CPF.charAt(i)!='-'){
+                num =Character.getNumericValue(CPF.charAt(i));
+                sm = sm + (num * peso);
+                peso = peso - 1;
+                }
+            }
+            int r=11-(sm%11); //digito de verificacao numero 1 
+            if (r==10 || r==11){
+                r=0;
+            }
+            if (r!=dig10){
+                return false;
+            }
+            sm=0;
+            peso=11;
+            for (i=0; i<13; i++) {
+                if(CPF.charAt(i)!='.' && CPF.charAt(i)!='/' && CPF.charAt(i)!='-'){
+                num =Character.getNumericValue(CPF.charAt(i));
+                sm = sm + (num * peso);
+                peso = peso - 1;
+                }
+            }
+            int r2=11-(sm%11);
+            if (r2==10 || r2==11){
+                r2=0;
+            }
+            if (r2!=dig11){
+                return false;
+            }
+            return true;
         }
-        // char dig10, dig11;
-        // int sm, i, r, num, peso;
-
-        // // "try" - protege o codigo para eventuais erros de conversao de tipo (int)
-        // try {
-        // // Calculo do 1o. Digito Verificador
-        //     sm = 0;
-        //     peso = 10;
-        //     for (i=0; i<9; i++) {
-        // // converte o i-esimo caractere do CPF em um numero:
-        // // por exemplo, transforma o caractere "0" no inteiro 0
-        // // (48 eh a posicao de "0" na tabela ASCII)
-        //     num = (int)(CPF.charAt(i) - 48);
-        //     sm = sm + (num * peso);
-        //     peso = peso - 1;
-        //     }
-
-        //     r = 11 - (sm % 11);
-        //     if ((r == 10) || (r == 11))
-        //         dig10 = "0";
-        //     else dig10 = (char)(r + 48); // converte no respectivo caractere numerico
-
-        // // Calculo do 2o. Digito Verificador
-        //     sm = 0;
-        //     peso = 11;
-        //     for(i=0; i<10; i++) {
-        //     num = (int)(CPF.charAt(i) - 48);
-        //     sm = sm + (num * peso);
-        //     peso = peso - 1;
-        //     }
-
-        //     r = 11 - (sm % 11);
-        //     if ((r == 10) || (r == 11))
-        //          dig11 = "0";
-        //     else dig11 = (char)(r + 48);
-
-        // // Verifica se os digitos calculados conferem com os digitos informados.
-        //     if ((dig10 == CPF.charAt(9)) && (dig11 == CPF.charAt(10)))
-        //          return(true);
-        //     else return(false);
-        //         } catch (InputMismatchException erro) {
-        //         return(false);
-        //     }
-        }
+        return false;
     }
+}
