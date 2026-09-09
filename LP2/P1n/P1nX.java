@@ -4,7 +4,7 @@ public class P1nX{
         for (int i=0;i<numero;i++){
             System.out.print("Insira o nome:");
             String nome=scanner.nextLine();
-            while(!Pessoa.isNome(nome) && !nome.equals("\n")){
+            while(!nome.equals("\n") && !Pessoa.isNome(nome) ){
                 System.out.println("Nome inválido, por favor inserir apenas letras, com o máximo de 50 caracteres. Sem espaço. ");
                 nome=scanner.nextLine();
             }
@@ -22,7 +22,7 @@ public class P1nX{
             }
             System.out.print("Dia de nascimento:");
             String dia=scanner.nextLine();
-            while(!ValidaData.isDia(dia) && !dia.equals("\n")){
+            while(!dia.equals("\n") && !ValidaData.isDia(dia)){
                 System.out.println("Dia inválido, escolher valor entre 1 e 31");
                 dia=scanner.nextLine();
             }
@@ -31,7 +31,7 @@ public class P1nX{
             }
             System.out.print("Mês de nascimento:");
             String mes=scanner.nextLine();
-            while(!ValidaData.isMes(mes) && !mes.equals("\n")){
+            while(!mes.equals("\n") && !ValidaData.isMes(mes)){
                 System.out.println("Mês inválido, escolher valor entre 1 e 12 ou janeiro fevereiro marco .... dezembro ");
                 mes=scanner.nextLine();
             }
@@ -40,7 +40,7 @@ public class P1nX{
             }
             System.out.print("Ano de nascimento:");
             String ano=scanner.nextLine();
-            while(!ValidaData.isAno(ano) && !ano.equals("\n")){
+            while(!ano.equals("\n") && !ValidaData.isAno(ano)){
                 System.out.println("Ano inválido, inserir um número de 4 dígitos entre o ano atual e 120 anos atrás");
                 ano=scanner.nextLine();
             }
@@ -49,7 +49,7 @@ public class P1nX{
             }
             System.out.print("Insira o CPF:");
             String CPF=scanner.nextLine();
-            while(!ValidaCPF.isCPF(CPF) && !CPF.equals("\n")){
+            while( !CPF.equals("\n") && !ValidaCPF.isCPF(CPF)){
                 System.out.println("CPF inválido, digite um válido nos 3 possíveis formatos:12345678901, 123.456.789-01, 123.456.789/01 ");
                 CPF=scanner.nextLine();
             }
@@ -58,7 +58,7 @@ public class P1nX{
             }
             System.out.print("Insira o peso:");
             String peso=scanner.nextLine();
-            while(!Pessoa.isPeso(peso) && !peso.equals("\n")){
+            while(!peso.equals("\n") && !Pessoa.isPeso(peso)){
                 peso=scanner.nextLine();
             }
             if (peso.equals("\n")){
@@ -66,7 +66,7 @@ public class P1nX{
             }
             System.out.print("Insira a altura:");
             String altura=scanner.nextLine();
-            while(!Pessoa.isAltura(altura)){
+            while(!altura.equals("\n") && !Pessoa.isAltura(altura)){
                 altura=scanner.nextLine();
             }
             if (altura.equals("\n")){
@@ -74,7 +74,7 @@ public class P1nX{
             }
             System.out.print("Essa pessoa é de gênero masculino ou feminino:");
             String genero=scanner.nextLine();
-            while((!genero.equals("m") || !genero.equals("f")) && !genero.equals("\n")){
+            while((!genero.equals("\n") && !genero.equals("m") || !genero.equals("f")) ){
                 System.out.println("Gênero inválido, por favor inserir f para feminino ou m para masculino");
                 genero=scanner.nextLine();
             }
@@ -108,6 +108,7 @@ public class P1nX{
             }
         }
         System.out.println(String.format("Foram criados: %d Homens e %d Mulheres ", homens, mulheres));
+        System.out.println("Programa encerrado.");
     }
     public static void main(String[] args){
         Scanner scanner=new Scanner(System.in);
@@ -130,7 +131,7 @@ public class P1nX{
             argumentos=args;
         }
         //argumentos agora é um array de strings com os argumentos do inicio 
-        while(!argumentos[0].equals("m") || !argumentos[0].equals("f")){
+        while(!argumentos[0].equals("m") && !argumentos[0].equals("f")){
             System.out.println("Gênero inválido, por favor inserir f para feminino ou m para masculino");
             argumentos[0]=scanner.nextLine();
         }
@@ -160,8 +161,8 @@ public class P1nX{
             System.out.println("Peso inválido, inserir um peso entre 0.01 e 400 kg");
             argumentos[7]=scanner.nextLine();
         }
-        while(!ValidaData.isMes(argumentos[8])){
-            System.out.println("Altura inválido, inserir uma altura entre 0.01 e 4 metros");
+        while(!Pessoa.isAltura(argumentos[8])){
+            System.out.println("Altura inválida, inserir uma altura entre 0.01 e 4 metros");
             argumentos[8]=scanner.nextLine();
         }
         while(!ValidaData.isDataValida(argumentos[5],argumentos[4],argumentos[3])){ //Pegar uma data válida
@@ -176,6 +177,18 @@ public class P1nX{
                 System.out.println("Mês inválido, inserir um mês entre 1 e 12 ou janeiro marco fevereiro... dezembro");
                 argumentos[4]=scanner.nextLine();
             }
+        }
+        Pessoa generico_input;
+        int dia_num=Integer.parseInt(argumentos[3]);
+        int mes_num=Integer.parseInt(argumentos[4]);
+        int ano_num=Integer.parseInt(argumentos[5]);
+        float peso_num=Float.parseFloat(argumentos[7]);
+        float altura_num=Float.parseFloat(argumentos[8]); //a esse ponto, todas as entradas foram validadas, então não tem problema fazer isso
+        if(argumentos[0].equals("m")){
+            generico_input=new Homem(argumentos[1],argumentos[2], dia_num, mes_num, ano_num, argumentos[6], peso_num, altura_num);
+        }
+        else{
+            generico_input=new Mulher(argumentos[1],argumentos[2], dia_num, mes_num, ano_num, argumentos[6], peso_num, altura_num);
         }
         int pessoas;
         System.out.print("Quantas pessoas a mais deseja inserir?");
@@ -192,5 +205,7 @@ public class P1nX{
         }
         Pessoa[] arrPrinc=new Pessoa[pessoas];
         P1nX.pegaInput(arrPrinc,pessoas,scanner);
+        System.out.println(generico_input);
+        P1nX.MostrarInput(arrPrinc);
     }
 }
