@@ -70,7 +70,16 @@ public class Pessoa{
         if (peso>0 && peso<=400){
             return true;
         }
+        System.out.println("Peso inválido, inserir um peso entre 0.01 e 400.00 (no formato dd.dd)kg");
         return false; 
+    }
+    public static boolean isPeso(String peso){
+        if(!peso.matches("\\d{1,3}[.]\\d{1,2}")){
+            System.out.println("Peso inválido, inserir um peso entre 0.01 e 400.00 (no formato dd.dd)kg");
+            return false;
+        }
+        float peso_num=Float.parseFloat(peso);
+        return isPeso(peso_num);
     }
     public float get_peso(){
         return peso;
@@ -92,11 +101,21 @@ public class Pessoa{
         if (altura>0 && altura<=4){
             return true;
         }
+        System.out.println("Altura inválida, inserir uma altura entre 0.01 e 4.0 metros(no formato d.dd)");
         return false; 
+    }    
+    public static boolean isAltura(String altura){
+        if(!altura.matches("\\d{1}[.]\\d{1,2}")){
+            System.out.println("Altura inválida, inserir uma altura entre 0.01 e 4.0 metros(no formato d.dd)");
+            return false;
+        }
+        float alt_num=Float.parseFloat(altura);
+        return isAltura(alt_num);
     }
     public float get_altura(){
         return altura;
     }
+    
     public boolean set_altura(float altura){
         if (altura>0 && altura<=3){
             this.altura=altura;
@@ -128,7 +147,7 @@ public class Pessoa{
         Altura: %.2f m
         """, //o resto dos atributos do toString estão no toString de Homem e Mulher
         //Só fiz isso para botar o "genero" no meio do toString, como está explicitado nas saídas válidas
-        nome,sobreNome,CPF,peso,altura);
+        nome,sobreNome,numCPF,peso,altura);
         return output;
     }
 

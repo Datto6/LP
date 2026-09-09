@@ -59,7 +59,6 @@ public class P1nX{
             System.out.print("Insira o peso:");
             String peso=scanner.nextLine();
             while(!Pessoa.isPeso(peso) && !peso.equals("\n")){
-                System.out.println("Peso inválido, inserir um peso entre 0.01 e 400 kg");
                 peso=scanner.nextLine();
             }
             if (peso.equals("\n")){
@@ -68,7 +67,6 @@ public class P1nX{
             System.out.print("Insira a altura:");
             String altura=scanner.nextLine();
             while(!Pessoa.isAltura(altura)){
-                System.out.println("Altura inválido, inserir uma altura entre 0.01 e 4 metros");
                 altura=scanner.nextLine();
             }
             if (altura.equals("\n")){

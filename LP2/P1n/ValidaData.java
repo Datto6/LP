@@ -61,9 +61,16 @@ public class ValidaData{
             return true;  //checar se é ano bissexto?
         }
         return false;
-
     }
-    public static boolean isDataValida(String data){
+    public static boolean isDataValida(String ano, String mes, String dia){
+        if (isMes(mes) && isDia(dia) && isAno(ano)){ //os 3 tem que ser validos 
+            Mes considerado=Mes.valueOf(mes); //pego um mes dado o nome dele usando o Enum
+            int num_dia=Integer.parseInt(dia);
+            if(considerado.get_Qntd_dias()<num_dia){ //considerar validade de dia dado o mes
+                return false;
+            }
+            return true;  //checar se é ano bissexto?
+        }
         return false;
     }
 
