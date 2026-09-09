@@ -57,7 +57,7 @@ public class ValidaData{
             if(considerado.get_Qntd_dias()<dia){ //considerar validade de dia dado o mes
                 return false;
             }
-            return true;
+            return true;  //checar se é ano bissexto?
         }
         return false;
 

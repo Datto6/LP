@@ -8,50 +8,44 @@ public class Pessoa{
     private float peso,altura;
     private static int criados=0;
     public static boolean isNome(String nome){
-        return nome.matches("[a-z]{1,50}"); //deve ser entre 1 e 50 letras, apenas
+        boolean retorno=nome.matches("[a-z]{1,50}");
+        if(!retorno){
+            System.out.println("Nome inválido, por favor inserir apenas letras, com o máximo de 50 caracteres. Sem espaço. ");
+        }
+        return retorno; //deve ser entre 1 e 50 letras, apenas
     }
     public String get_nome(){
         return nome; //pode retornar nulo ou mal definido se ainda nao foi inicializado
     }
     public boolean set_nome(String nome){
         //retorna  true se foi executada com sucesso, falso caso contrário
-        if (nome!=null && nome.length()<=50){
+        if (nome!=null && isNome(nome)){
             this.nome=nome;
             return true;
-        }
-        else if(nome==null){
-            System.out.println("Erro, nome nulo vazio dado");
-        }
-        else{
-            System.out.println("Erro, excedeu limite de caracteres");
         }
         return false;
     }
     public static boolean isSobreNome(String sobreNome){
-        return sobreNome.matches("[a-z]+"); //deve ser um ou mais letras, apenas
+        boolean retorno=sobreNome.matches("[a-z]{1,50}");
+        if(!retorno){// se for falso, entra nesse if
+            System.out.println("Parâmetro sobrenome inválido, por favor inserir apenas letras, com o máximo de 50 caracteres. Sem espaço. ");
+        }
+        return retorno; //deve ser entre 1 e 50 letras, apenas
     }
     public String get_sobreNome(){
         return sobreNome; //pode retornar nulo ou mal definido se ainda nao foi inicializado
     }
     public boolean set_sobreNome(String sobreNome){
         //retorna  true se foi executada com sucesso, falso caso contrário
-        if (sobreNome!=null && sobreNome.length()<=50){
+        if (sobreNome!=null && isSobreNome(sobreNome)){
             this.sobreNome=sobreNome;
             return true;
-        }
-        else if(sobreNome==null){
-            System.out.println("Erro, nome nulo dado");
-
-        }
-        else{
-            System.out.println("Erro, excedeu limite de caracteres");
-            return false;
         }
         return false;
     }
 
     public String get_numCPF(){
-            return numCPF; //pode retornar nulo ou mal definido se ainda nao foi inicializado
+        return numCPF; //pode retornar nulo ou mal definido se ainda nao foi inicializado
     }
 
     public boolean set_numCPF(String numCPF){
@@ -74,14 +68,7 @@ public class Pessoa{
     }
     public static boolean isPeso(float peso){
         if (peso>0 && peso<=400){
-    
             return true;
-        }
-        else if (peso<=0){
-            System.out.println("Erro, peso negativo ou zero.");
-        }
-        else if (peso>400){
-            System.out.println("Erro, peso acima de 400 kg, tem certeza desse valor?");
         }
         return false; 
     }
@@ -102,7 +89,10 @@ public class Pessoa{
         return false; 
     }
     public static boolean isAltura(float altura){
-        return false;
+        if (altura>0 && altura<=4){
+            return true;
+        }
+        return false; 
     }
     public float get_altura(){
         return altura;
