@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 public class ValidaData{
     public static boolean isDia(int dia){
         if (dia<=0 || dia>31){
@@ -29,7 +30,7 @@ public class ValidaData{
         }
         else if(mes.matches("[a-z]{4,9}")){
             for (Mes n: Mes.values()){ //itera sobre todos os valores
-                if(mes.equals(n)){
+                if(mes.equals(n.name())){
                     return true;
                 }
             }
@@ -53,7 +54,7 @@ public class ValidaData{
     }    
     public static boolean isDataValida(int ano, int mes, int dia){ //qual é o sentido de uma data numérica?
         if (isMes(mes) && isDia(dia) && isAno(ano)){ //os 3 tem que ser validos 
-            Mes considerado=Mes.mes; //uso de Enum
+            Mes considerado=Mes.values()[mes - 1]; //values retorna um array indexado por 0 dos meses, janeiro é 0
             if(considerado.get_Qntd_dias()<dia){ //considerar validade de dia dado o mes
                 return false;
             }

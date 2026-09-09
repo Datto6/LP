@@ -123,9 +123,12 @@ public class Pessoa{
         String output=String.format("""
         Nome da Pessoa: %s
         Sobrenome:%s
+        CPF: %s
+        Peso:%.2f kg
+        Altura: %.2f m
         """, //o resto dos atributos do toString estão no toString de Homem e Mulher
         //Só fiz isso para botar o "genero" no meio do toString, como está explicitado nas saídas válidas
-        nome,sobreNome);
+        nome,sobreNome,CPF,peso,altura);
         return output;
     }
 
@@ -139,10 +142,11 @@ public class Pessoa{
 
     //Construtores
     public Pessoa(){
-        adicionar_criado();
+        //usar um adicionar criado aqui causa erros
+        //adicionar_criado(); faz sentido, mas não nesse caso onde só podem existir objetos com dados preenchidos por completo
     }
     public Pessoa(String nome,String sobreNome, int dia, int mes, int ano){
-        adicionar_criado();
+        //adicionar_criado(); como o programa não aceita objetos com dados faltantes, isso não faz sentido semantico
         this.nome=nome;
         this.sobreNome=sobreNome;
         this.dataNasc=LocalDate.of(ano,mes,dia);

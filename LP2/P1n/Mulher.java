@@ -1,14 +1,15 @@
 public class Mulher extends Pessoa{
     public String toString(){
-        String saida=super.toString();
         String output=String.format("""
+        Nome da Pessoa: %s
+        Sobrenome:%s
         Idade: %s
         Gênero: Feminino
         CPF: %s
         Peso:%.2f kg
         Altura: %.2f m
         """,
-        idade(),numCPF,peso,altura);
+        get_nome(),get_sobreNome(),idade(),get_numCPF(),get_peso(),get_altura());
         return output;
     }
     public Mulher(String nome,String sobreNome, int dia, int mes, int ano){
