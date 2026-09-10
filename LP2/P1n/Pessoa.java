@@ -7,6 +7,7 @@ public class Pessoa{
     private LocalDate dataNasc;
     private float peso,altura;
     private static int criados=0;
+    private static int preenchidos=0;
     public static boolean isNome(String nome){
         boolean retorno=nome.matches("(?i)\\p{L}{1,50}"); //quaisquer letras, maiuscula ou minuscula
         if(!retorno){
@@ -158,20 +159,26 @@ public class Pessoa{
     public static int feitos(){
         return Pessoa.criados;
     }
-
+    private void adicionar_preenchido(){
+        Pessoa.preenchidos++;
+    }
+    public static int preenchidos(){
+        return Pessoa.preenchidos;
+    }
     //Construtores
     public Pessoa(){
-        //usar um adicionar criado aqui causa erros
-        //adicionar_criado(); faz sentido, mas não nesse caso onde só podem existir objetos com dados preenchidos por completo
+        //quando faço array= new Pessoa(), ele chama esse construtor, então tenho que diferenciar a contagem de objetos vazios com a de preenchidos
+        adicionar_criado(); 
     }
     public Pessoa(String nome,String sobreNome, int dia, int mes, int ano){
-        //adicionar_criado(); como o programa não aceita objetos com dados faltantes, isso não faz sentido semantico
+        adicionar_criado(); //como o programa não aceita objetos com dados faltantes, tenho que adicionar contador de objetos
         this.nome=nome;
         this.sobreNome=sobreNome;
         this.dataNasc=LocalDate.of(ano,mes,dia);
     }
     public Pessoa(String nome,String sobreNome, int dia, int mes, int ano,String numCPF,float peso, float altura){
         adicionar_criado();
+        adicionar_preenchido(); //contador de quantos objetos vou iterar no array de mostrar input
         this.nome=nome;
         this.sobreNome=sobreNome;
         this.dataNasc=LocalDate.of(ano,mes,dia); //tem que validar entrada antes de passar pra cá pra evitar exception

@@ -128,7 +128,7 @@ public class P1nX{
         }
     }
     public static void MostrarInput(Pessoa[] Arr, Pessoa inicial){
-        int num_pessoas=Pessoa.feitos()-1; // Ja vou ter criado um default por input inicial
+        int num_pessoas=Pessoa.preenchidos()-1; // Ja vou ter criado um default por input inicial
         int mulheres=0;
         int homens=0;
         for(int i=0;i<num_pessoas;i++){
