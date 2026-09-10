@@ -242,11 +242,11 @@ public class P1nX{
         int pessoas;
         System.out.print("Quantas pessoas a mais deseja inserir?");
         String input =scanner.nextLine();
-        if(input.matches("\\d+")){
+        if(input.matches("\\d{1,5}")){
             pessoas=Integer.parseInt(input);
         }
         else{
-            while(!input.matches("\\d+")){
+            while(!input.matches("\\d{1,5}")){
                 System.out.println("Entrada deve ser numérica apenas. Tente de novo");
                 input=scanner.nextLine();
             }
