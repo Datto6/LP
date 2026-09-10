@@ -5,7 +5,6 @@ public class P1nX{
             System.out.print("Insira o nome: ");
             String nome=scanner.nextLine();
             while(!nome.equals("") && !Pessoa.isNome(nome) ){
-                System.out.println("Nome inválido, por favor inserir apenas letras, com o máximo de 50 caracteres. Sem espaço. ");
                 nome=scanner.nextLine();
             }
             if(nome.equals("")){
@@ -89,14 +88,23 @@ public class P1nX{
                 System.out.print("Inserir mês: ");
                 mes=scanner.nextLine();
 
-                while(!ValidaData.isDia(dia)){
+                while(!dia.equals("") &&  !ValidaData.isDia(dia)){
                     System.out.println("Dia inválido, inserir um dia entre 1 e 31");
                     dia=scanner.nextLine();
                 }
-                while(!ValidaData.isMes(mes)){
+                if (dia.equals("")){ //usuário pode desistir de botar uma data valida pro dado ano
+                    break;
+                }
+                while(!mes.equals("") && !ValidaData.isMes(mes)){
                     System.out.println("Mês inválido, inserir um mês entre 1 e 12 ou janeiro marco fevereiro... dezembro");
                     mes=scanner.nextLine();
                 }
+                if (mes.equals("")){
+                    break;
+                }
+            }
+            if (dia.equals("") || mes.equals("")){
+                break;
             }
             int dia_num=Integer.parseInt(dia);
             int mes_num;
@@ -246,6 +254,7 @@ public class P1nX{
         }
         Pessoa[] arrPrinc=new Pessoa[pessoas];
         P1nX.pegaInput(arrPrinc,pessoas,scanner);
+        System.out.println("--------------"); //uma linha de espaçamento
         System.out.println(generico_input);
         P1nX.MostrarInput(arrPrinc,generico_input);
     }
