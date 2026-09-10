@@ -2,7 +2,7 @@ import java.util.Scanner;
 public class P1nX{
     public static void pegaInput(Pessoa[] Arr, int numero,Scanner scanner){
         for (int i=0;i<numero;i++){
-            System.out.print("Insira o nome:");
+            System.out.print("Insira o nome: ");
             String nome=scanner.nextLine();
             while(!nome.equals("") && !Pessoa.isNome(nome) ){
                 System.out.println("Nome inválido, por favor inserir apenas letras, com o máximo de 50 caracteres. Sem espaço. ");
@@ -11,7 +11,7 @@ public class P1nX{
             if(nome.equals("")){
                 break;
             }
-            System.out.print("Insira o sobrenome:");
+            System.out.print("Insira o sobrenome: ");
             String sobrenome=scanner.nextLine();
             while(!sobrenome.equals("") && !Pessoa.isSobreNome(sobrenome)){
                 sobrenome=scanner.nextLine();
@@ -19,7 +19,7 @@ public class P1nX{
             if (sobrenome.equals("")){
                 break;
             }
-            System.out.print("Dia de nascimento:");
+            System.out.print("Dia de nascimento: ");
             String dia=scanner.nextLine();
             while(!dia.equals("") && !ValidaData.isDia(dia)){
                 System.out.println("Dia inválido, escolher valor entre 1 e 31");
@@ -28,7 +28,7 @@ public class P1nX{
             if (dia.equals("")){
                 break;
             }
-            System.out.print("Mês de nascimento:");
+            System.out.print("Mês de nascimento: ");
             String mes=scanner.nextLine();
             while(!mes.equals("") && !ValidaData.isMes(mes)){
                 System.out.println("Mês inválido, escolher valor entre 1 e 12 ou janeiro fevereiro marco .... dezembro ");
@@ -37,7 +37,7 @@ public class P1nX{
             if (mes.equals("")){
                 break;
             }
-            System.out.print("Ano de nascimento:");
+            System.out.print("Ano de nascimento: ");
             String ano=scanner.nextLine();
             while(!ano.equals("") && !ValidaData.isAno(ano)){
                 System.out.println("Ano inválido, inserir um número de 4 dígitos entre o ano atual e 120 anos atrás");
@@ -46,7 +46,7 @@ public class P1nX{
             if (ano.equals("")){
                 break;
             }
-            System.out.print("Insira o CPF:");
+            System.out.print("Insira o CPF: ");
             String CPF=scanner.nextLine();
             while( !CPF.equals("") && !ValidaCPF.isCPF(CPF)){
                 System.out.println("CPF inválido, digite um válido nos 3 possíveis formatos:12345678901, 123.456.789-01, 123.456.789/01 ");
@@ -55,7 +55,7 @@ public class P1nX{
             if (CPF.equals("")){
                 break;
             }
-            System.out.print("Insira o peso:");
+            System.out.print("Insira o peso: ");
             String peso=scanner.nextLine();
             while(!peso.equals("") && !Pessoa.isPeso(peso)){
                 peso=scanner.nextLine();
@@ -63,7 +63,7 @@ public class P1nX{
             if (peso.equals("")){
                 break;
             }
-            System.out.print("Insira a altura:");
+            System.out.print("Insira a altura: ");
             String altura=scanner.nextLine();
             while(!altura.equals("") && !Pessoa.isAltura(altura)){
                 altura=scanner.nextLine();
@@ -71,7 +71,7 @@ public class P1nX{
             if (altura.equals("")){
                 break;
             }
-            System.out.print("Essa pessoa é de gênero masculino ou feminino:");
+            System.out.print("Essa pessoa é de gênero masculino ou feminino: ");
             String genero=scanner.nextLine();
             while((!genero.equals("") && !genero.equals("m") && !genero.equals("f"))){
                 System.out.println("Gênero inválido, por favor inserir f para feminino ou m para masculino");
@@ -83,10 +83,10 @@ public class P1nX{
             while(!ValidaData.isDataValida(ano,mes,dia)){ //Pegar uma data válida
                 System.out.println("Data inválida, escolher mês e dias compatíveis");
         
-                System.out.print("Inserir dia");
+                System.out.print("Inserir dia: ");
                 dia=scanner.nextLine();
 
-                System.out.print("Inserir mês");
+                System.out.print("Inserir mês: ");
                 mes=scanner.nextLine();
 
                 while(!ValidaData.isDia(dia)){
