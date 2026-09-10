@@ -3,7 +3,7 @@ public class ValidaCPF{
         if (CPF.matches("\\d{11}")){ //formato de 11 digitos bruto
             return CPF;
         }
-        if(CPF.matches("\\d{3}[.]\\d{3}[.]\\d{3}([-]|[/])\\d{2})")){ //ddd.ddd.ddd(- ou /)dd 
+        if(CPF.matches("\\d{3}[.]\\d{3}[.]\\d{3}([-]|[/])\\d{2}")){ //ddd.ddd.ddd(- ou /)dd 
             String saida=CPF.substring(0,3)+CPF.substring(4,7)+CPF.substring(8,11)+CPF.substring(12); //tira pontuacao
             return saida;
         }

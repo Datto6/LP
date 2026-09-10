@@ -8,7 +8,7 @@ public class Pessoa{
     private float peso,altura;
     private static int criados=0;
     public static boolean isNome(String nome){
-        boolean retorno=nome.matches("[a-z]{1,50}");
+        boolean retorno=nome.matches("(?i)\\p{L}{1,50}"); //quaisquer letras, maiuscula ou minuscula
         if(!retorno){
             System.out.println("Nome inválido, por favor inserir apenas letras, com o máximo de 50 caracteres. Sem espaço. ");
         }
@@ -26,7 +26,7 @@ public class Pessoa{
         return false;
     }
     public static boolean isSobreNome(String sobreNome){
-        boolean retorno=sobreNome.matches("[a-z]{1,50}");
+        boolean retorno=sobreNome.matches("(?i)\\p{L}{1,50}");
         if(!retorno){// se for falso, entra nesse if
             System.out.println("Parâmetro sobrenome inválido, por favor inserir apenas letras, com o máximo de 50 caracteres. Sem espaço. ");
         }
