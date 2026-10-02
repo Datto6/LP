@@ -1,17 +1,16 @@
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.time.LocalDate;
 public class MinhaListaOrdenavel{
-    private ArrayList lista_interna;
-    public ArrayList get_lista(){
+    private ArrayList<PessoaIMC> lista_interna;
+    public ArrayList<PessoaIMC> get_lista(){
         return lista_interna;
     }
     void add(PessoaIMC p){
         lista_interna.add(p);
     }
     public PessoaIMC get(int i){
-        Object objeto=Lista_interna.get(i);
-        if (objeto instanceof PessoaIMC){
-            return (PessoaIMC) objeto;
-        }
+        return lista_interna.get(i); //usamos genericos para garantir que objeto que sai será um objeto PessoaIMC
     }
     public Comparator<PessoaIMC> nomeC = new Comparator<PessoaIMC> () {
         @Override
@@ -19,7 +18,7 @@ public class MinhaListaOrdenavel{
             String nome1, nome2;
             nome1 = p1.get_nome();
             nome2 = p2.get_nome();
-            return String.compare(nome1, nome2);
+            return p1.get_nome().compareToIgnoreCase(p2.get_nome());
         }
     };
 
@@ -27,26 +26,17 @@ public class MinhaListaOrdenavel{
         @Override
         public int compare(PessoaIMC p1, PessoaIMC p2){
             float peso1, peso2;
-            peso1 = p1.get_peso();
-            peso2 = p2.get_peso();
+            peso1 = p1.getPeso();
+            peso2 = p2.getPeso();
             return Float.compare(peso1, peso2);
-        }
-    };
-    public Comparator<PessoaIMC> alturaC = new Comparator<PessoaIMC> () {
-        @Override
-        public int compare(PessoaIMC p1, PessoaIMC p2){
-            float altura1, altura2;
-            altura1 = p1.get_peso();
-            altura2 = p2.get_peso();
-            return Float.compare(altura1, altura2);
         }
     };
     public Comparator<PessoaIMC> IMCC = new Comparator<PessoaIMC> () {
         @Override
         public int compare(PessoaIMC p1, PessoaIMC p2){
             float imc1, imc2;
-            imc1 = p1.calculaIMC();
-            imc2 = p2.calculaIMC();
+            imc1 = p1.calculaIMC(p1.getAltura(),p1.getPeso());
+            imc2 = p2.calculaIMC(p2.getAltura(),p2.getPeso());
             return Float.compare(imc1, imc2);
         }
     };
@@ -89,63 +79,58 @@ public class MinhaListaOrdenavel{
             String CPF1,CPF2;
             CPF1 = p1.get_numCPF();
             CPF2 = p2.get_numCPF();
-            return String.compare(CPF1,CPF2); //Usando comparador de Strings
+            return CPF1.compareTo(CPF2); //Usando comparador de Strings
         }
     };
-    public ArrayList ordena(int criterio){
-        Criterio enum_crit=Criterio.values()[criterio]
+    public ArrayList<PessoaIMC> ordena(int criterio){
+        Criterio enum_crit=Criterio.values()[criterio]; //acessa enum equivalente ao criterio, usando seu valor ordinal
         switch (enum_crit){
             case NOME:
-                return this.lista_interna.sort(nomeC);
+                this.lista_interna.sort(nomeC);
                 break;
             case NOME_REVERSE:
-                return this.lista_interna.sort(nomeC.reversed());
+                this.lista_interna.sort(nomeC.reversed());
                 break;
             case PESO:
-                return this.lista_interna.sort(pesoC);
+                this.lista_interna.sort(pesoC);
                 break;
             case PESO_REVERSE:
-                return this.lista_interna.sort(pesoC.reversed());
-                break;
-            case ALTURA:
-                return this.lista_interna.sort(alturaC);
-                break;
-            case ALTURA_REVERSE:
-                return this.lista_interna.sort(alturaC.reversed());
+                this.lista_interna.sort(pesoC.reversed());
                 break;
             case IMC:
-                return this.lista_interna.sort(IMCC);
+                this.lista_interna.sort(IMCC);
                 break;
             case IMC_REVERSE:
-                return this.lista_interna.sort(IMCC.reversed());
+                this.lista_interna.sort(IMCC.reversed());
                 break;
             case GENERO:
-                return this.lista_interna.sort(generoC);
+                this.lista_interna.sort(generoC);
                 break;
             case GENERO_REVERSE:
-                return this.lista_interna.sort(generoC.reversed())
+                this.lista_interna.sort(generoC.reversed());
                 break;
             case IDADE:
-                return this.lista_interna.sort(idadeC);
+                this.lista_interna.sort(idadeC);
                 break;
             case IDADE_REVERSE:
-                return this.lista_interna.sort(idadeC.reversed());
+                this.lista_interna.sort(idadeC.reversed());
                 break;
             case DATA_NASC:
-                return this.lista_interna.sort(data_nascC);
+                this.lista_interna.sort(data_nascC);
                 break;
             case DATA_NASC_REVERSE:
-                return this.lista_interna.sort(data_nascC.reversed());
+                this.lista_interna.sort(data_nascC.reversed());
                 break;
             case CPF:
-                return this.lista_interna.sort(CPFC);
+                this.lista_interna.sort(CPFC);
                 break;
             case CPF_REVERSE:
-                return this.lista_interna.sort(CPFC.reversed());
+                this.lista_interna.sort(CPFC.reversed());
                 break;
         }
+        return this.lista_interna; //retorna lista agora ordenada
     }
     public MinhaListaOrdenavel(){
-        this.lista_interna=new ArrayList();
+        this.lista_interna=new ArrayList<PessoaIMC>();
     }
 }

@@ -64,11 +64,11 @@ public abstract class PessoaIMC extends Pessoa{
         return false;
     }
     protected float calculaIMC(float altura, float peso){
-        float pesoquadr=peso*peso;
-        float resultado=altura/pesoquadr;
+        float altquadr=altura*altura;
+        float resultado=peso/altquadr;
         return resultado;
     }
-    abstract String resultIMC();
+    abstract protected String resultIMC();
     public String toString(){
         String anterior=super.toString(); //pega toString de Pessoa
         String saida=anterior+String.format("""
@@ -80,8 +80,8 @@ public abstract class PessoaIMC extends Pessoa{
         super(nome,sobreNome,dia,mes,ano);
     }
     public PessoaIMC(String nome,String sobreNome, int dia, int mes, int ano,String numCPF,float peso, float altura){
+        super(nome,sobreNome,dia,mes,ano,numCPF);
         this.peso=peso;
         this.altura=altura;
-        super(nome,sobreNome,dia,mes,ano,numCPF);
     }
 }

@@ -1,10 +1,8 @@
-public enum Mes{
+public enum Criterio{
     NOME, // valor ordinal 0
     NOME_REVERSE,
     PESO,
     PESO_REVERSE,
-    ALTURA,
-    ALTURA_REVERSE,
     IMC,
     IMC_REVERSE,
     GENERO,
@@ -14,5 +12,5 @@ public enum Mes{
     DATA_NASC,
     DATA_NASC_REVERSE,
     CPF,
-    CPF_REVERSE;//15 valor ordinal
+    CPF_REVERSE;//13 valor ordinal
 }

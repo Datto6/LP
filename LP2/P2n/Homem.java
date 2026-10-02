@@ -1,5 +1,5 @@
 public class Homem extends PessoaIMC{
-    private String resultIMC(){
+    protected String resultIMC(){
         float IMC=calculaIMC(altura,peso);
         if (IMC<20.7){
             return "Abaixo do peso ideal";
@@ -12,11 +12,12 @@ public class Homem extends PessoaIMC{
     public String toString(){
         String anterior=super.toString();
         String output=anterior+String.format("""
-        %s
+
+        %s (IMC de %.2f)
         Idade: %d
         Gênero: Masculino
         """,
-        resultIMC(),idade());
+        resultIMC(),calculaIMC(altura,peso),idade());
         return output;
     }
     public Homem(String nome,String sobreNome, int dia, int mes, int ano){
