@@ -18,7 +18,7 @@ public class MinhaListaOrdenavel{
             String nome1, nome2;
             nome1 = p1.get_nome();
             nome2 = p2.get_nome();
-            return p1.get_nome().compareToIgnoreCase(p2.get_nome());
+            return p1.get_nome().compareToIgnoreCase(p2.get_nome()); //Usa função de comparação de string ignorando maiusculas
         }
     };
 
@@ -28,7 +28,7 @@ public class MinhaListaOrdenavel{
             float peso1, peso2;
             peso1 = p1.getPeso();
             peso2 = p2.getPeso();
-            return Float.compare(peso1, peso2);
+            return Float.compare(peso1, peso2);//Usa função de comparação de float
         }
     };
     public Comparator<PessoaIMC> IMCC = new Comparator<PessoaIMC> () {
@@ -37,7 +37,7 @@ public class MinhaListaOrdenavel{
             float imc1, imc2;
             imc1 = p1.calculaIMC(p1.getAltura(),p1.getPeso());
             imc2 = p2.calculaIMC(p2.getAltura(),p2.getPeso());
-            return Float.compare(imc1, imc2);
+            return Float.compare(imc1, imc2);//Usa função de comparação de float
         }
     };
     public Comparator<PessoaIMC> generoC = new Comparator<PessoaIMC> () {
@@ -61,7 +61,7 @@ public class MinhaListaOrdenavel{
             int idade1,idade2;
             idade1 = p1.idade();
             idade2 = p2.idade();
-            return Integer.compare(idade1, idade2);
+            return Integer.compare(idade1, idade2); //Usa funcao de comparacao de inteiros
         }
     };
     public Comparator<PessoaIMC> data_nascC = new Comparator<PessoaIMC> () {
