@@ -1,0 +1,5 @@
+package lp2g09.biblioteca;
+
+public class Usuario extends Pessoa{
+
+}
