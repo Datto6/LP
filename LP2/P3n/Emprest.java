@@ -1,5 +1,5 @@
 package lp2g09.biblioteca;
-
+import java.time.LocalDate;
 public class Emprest {
     private LocalDate emprestimo;
     private LocalDate devolucao;
@@ -8,4 +8,17 @@ public class Emprest {
         self.emprestimo=emprestimo;
         self.codigo_Livro=codigo;
     }
+    public String toString(){
+        DateTimeFormatter formato=DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String data_emprestimo=emprestimo.format(formato);
+        String data_devolucao="Pendente";
+        if (devolucao!=null){
+            data_devolucao=devolucao.format(formato);
+        }
+        String saida=String.format("""
+        Código de Livro: %d
+        Data de empréstimo: %s 
+        Data de devolução: %s 
+        """);
+    } 
 }

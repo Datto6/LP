@@ -7,5 +7,9 @@ public class Usuario extends Pessoa{
     public addLivroHist(LocalDate locacao,int codigo){
         Emprest emprestimo=new Emprest(locacao,codigo);
         hist.add(emprestimo);
+        emprestados++;
+    }
+    public String toString(){
+        
     }
 }
