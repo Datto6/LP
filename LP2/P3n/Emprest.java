@@ -19,6 +19,6 @@ public class Emprest {
         Código de Livro: %d
         Data de empréstimo: %s 
         Data de devolução: %s 
-        """);
+        """,codigo_Livro,data_emprestimo,data_devolucao);
     } 
 }
