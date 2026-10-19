@@ -3,7 +3,7 @@ public class P3nX{
         //Cria abre e salva os arquivos que contem uma HashTable
     }
     public void Cadastro(){
-        //Cadastra livro ou usuario
+
     }
     public void Emprestimo(){
         //Executa locacao ou devolucao de livro
