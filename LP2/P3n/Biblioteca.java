@@ -1,5 +1,4 @@
 package lp2g09.biblioteca;
-
 import java.util.HashTable;
 public class Biblioteca{
     //Atributos
@@ -15,7 +14,7 @@ public class Biblioteca{
         }
         usuarios[user.getCPF()]=user;
     }
-    
+
     public void cadastraLivro(Livro livro) throws LivroDuplicadoEx{
         //Cadastrar um livro no hashtable de livros
         Integer codigo= Integer.valueOf(Livro.getCodigo());
@@ -96,7 +95,7 @@ public class Biblioteca{
     }
     public String imprimeUsuarios(){
         //retorna string com lista de usuarios ordenados por CPF
-        ArrayList<Uusario> lista_usuarios=new ArrayList<Usuario>(usuarios.values());
+        ArrayList<Usuario> lista_usuarios=new ArrayList<Usuario>(usuarios.values());
         lista_usuarios.sort(CPFC);
         String saida=""
         for (int i=0;i<lista_usuarios.size();i++){

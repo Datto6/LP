@@ -70,7 +70,26 @@ public class Livro{
 
         return 0;
     }
-
+    private String StringHistorico(){
+        //Apenas retorna o String do Histórico
+        String saida=""
+        for (int i=0;i<hist.size();i++){
+            saida+="---------------\n";
+            saida+= hist.get(i).toString()+"\n";
+        }
+        return saida;
+    }
+    public String toString(){
+        //Retorna as informacoes em formato de String, inclusive o histórico
+        String saida=String.format("""
+        Título: %s
+        Categoria: %s
+        Código: %d
+        Cópias: %d 
+        Emprestados: %d
+        Histórico: %s""",titulo,categoria.getName(),codigo,copias,emprestados,StringHistorico());
+        return saida;
+    }
     //Construtor
     public Livro(int codigo, String titulo, Categoria categoria, int copias, int emprestados){
         self.codigo=codigo;
