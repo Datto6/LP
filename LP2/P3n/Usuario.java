@@ -27,4 +27,18 @@ public class Usuario extends Pessoa{
         Histórico: %s""",titulo,categoria.getName(),codigo,copias,emprestados,StringHistorico());
         return saida;
     }
+    //Construtores
+    public Usuario(String nome,String sobreNome, int dia, int mes, int ano){
+        super(nome,sobreNome,dia,mes,ano);
+    }
+    public Usuario(String nome,String sobreNome, int dia, int mes, int ano,String numCPF, String endereco){
+        super(nome,sobreNome,dia,mes,ano,numCPF);
+        this.endereco=endereco;
+        this.hist=new ArrayList<Emprest>();
+    }
+    public Usuario(String nome,String sobreNome, int dia, int mes, int ano,String numCPF, String endereco, ArrayList<Emprest> hist){
+        super(nome,sobreNome,dia,mes,ano,numCPF);
+        this.endereco=endereco;
+        this.hist=hist;
+    }
 }

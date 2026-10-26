@@ -10,7 +10,7 @@ public class Livro{
     private int copias;
     private int emprestados;
     private ArrayList<EmprestPara> hist;
-    //Métodos getter
+    //Métodos getter (não vou incluir os setters porque não quero que haja acesso direto)
     public int getCodigo(){
         return codigo;
     }
@@ -28,6 +28,27 @@ public class Livro{
     }
     public ArrayList<EmprestPara> getHist(){
         return hist;
+    }
+    //Métodos de classe para entrada de dados 
+    public static boolean isCategoria(int categoria){
+        if (categoria<=0 || categoria>6){
+            return false;
+        }
+        return true;
+    }
+    public static boolean isCategoria(String categoria){
+        if(categoria.matches("\\d{1,2}")){ //formato só pode ser 2 digitos
+            return isCategoria(Integer.parseInt(categoria));
+        }
+        else if(mes.matches("[a-z]{4,9}")){
+            for (Categoria n: Categoria.values()){ //itera sobre todos os valores
+                if(mes.equals(n.name())){
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
     }
     //Métodos de comportamento
     public void empresta() throws CopiaNaoDisponivelEx{
