@@ -10,11 +10,13 @@ public class Emprestimo{
         switch (tipo){
             case 0:
                 Relatorio.acervoLivro(bib);
+                break;
             case 1:
                 DevolveLivro(user,bib,scanner);
+                break;
             case 2:
                 EmprestaLivro(user,bib,scanner);
-            break;
+                break;
         }
     }
 
@@ -56,9 +58,10 @@ public class Emprestimo{
             }
             catch (NumberFormatException e){
                 System.out.println("Código inválido, apenas digite um número entre 1 e 999");
-                System.out.print("Insira o código: ");
-                codigo=scanner.nextLine();
+
             }
+            System.out.print("Insira o código: ");
+            codigo=scanner.nextLine();
         }
         Livro livro=null;
         try {
@@ -70,9 +73,11 @@ public class Emprestimo{
             if(codigo.equals("1")){ //Porque só tem uma opção, não vou fazer OUTRO bloco try catch para pegar o parseInt ou fazer o regex de novo
                 DevolveLivro(user,bib,scanner);
             }
+            return;
         }
+        int multa=-1;
         try{
-            int multa=bib.devolveLivro(user,livro);
+            multa=bib.devolveLivro(user,livro);
         }
         catch (NenhumaCopiaEmprestadaEx e){
             System.out.println("Nenhuma copia emprestada, devolução não feita.");
@@ -80,11 +85,11 @@ public class Emprestimo{
         }
         System.out.println("Recibo da devolução: ");
         System.out.println(String.format("""
-
+        MULTA: %d
         Usuário:
         %s
         Livro Devolvido:
-        %s""",user.toString(),livro.toString()));
+        %s""",multa,user.toString(),livro.toString()));
     }
 
     private static void EmprestaLivro(Usuario user, Biblioteca bib,Scanner scanner){
@@ -101,9 +106,9 @@ public class Emprestimo{
             }
             catch (NumberFormatException e){
                 System.out.println("Código inválido, apenas digite um número entre 1 e 999");
-                System.out.print("Insira o código: ");
-                codigo=scanner.nextLine();
             }
+            System.out.print("Insira o código: ");
+            codigo=scanner.nextLine();
         }
         Livro livro=null;
         try {
@@ -111,10 +116,12 @@ public class Emprestimo{
         }
         catch (LivroNaoCadastradoEx e){
             System.out.println(String.format("Livro de código %d não encontrado", codigo_num));
+            System.out.println("Deseja tentar de novo? Digite 1 se for o caso.");
             codigo=scanner.nextLine();
             if(codigo.equals("1")){ //Porque só tem uma opção, não vou fazer OUTRO bloco try catch para pegar o parseInt ou fazer o regex de novo
                 EmprestaLivro(user,bib,scanner);
             }
+            return;
         }
         try {
             bib.emprestaLivro(user,livro);

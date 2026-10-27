@@ -14,27 +14,20 @@ public class Manutencao{
         String usuarios=scanner.nextLine() +".dat";
         System.out.print("Digitar nome do arquivo de livros: ");
         String livros=scanner.nextLine()+ ".dat";
-        try{
-            Hashtable<String,Usuario> tabela_user=bib.getTabelaUsers();
-            Hashtable<Integer,Livro> tabela_livro=bib.getTabelaLivros();
-            bib.salvaArquivo(tabela_user,usuarios);
-            bib.salvaArquivo(tabela_livro,livros);
+        try {
+            bib.salvaUsuarios(usuarios);
+            bib.salvaLivros(livros);
         }
-        catch (FileNotFoundException e){
-            System.out.println("Arquivo não encontrado: " + e.getMessage());
-            return;
-        }
-        catch (IOException e){
-            System.out.println("Erro na escrita,término de execução no arquivo"+ e.getMessage());
-            return;
+        catch (IOException e) { // FileNotFoundException is a subclass, so one catch is enough
+            System.out.println("Erro na escrita: " + e.getMessage());
         }
     }
     public static Biblioteca abrirArquivos(Scanner scanner){
         //ler o arquivo
         System.out.print("Digitar nome do arquivo de usuários: ");
-        String usuarios=scanner.nextLine();
+        String usuarios=scanner.nextLine() +".dat";
         System.out.print("Digitar nome do arquivo de livros: ");
-        String livros=scanner.nextLine();
+        String livros=scanner.nextLine() +".dat";
         Biblioteca bib=null;
         try{
             bib=new Biblioteca(usuarios,livros);

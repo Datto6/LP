@@ -4,24 +4,15 @@ import java.io.IOException;
 public class Cadastro{
     //Cadastra livro ou usuario, podendo salvar ou nap
     private static int tipoEntrada(Scanner scanner){
-        System.out.println("Digite 1 para cadastrar um novo livro, 0 para um novo usuário.");
-        String entrada=scanner.nextLine();
-        int tipo=-1;
-        while (true && !entrada.equals("")){
-            try{
-                tipo=Integer.parseInt(entrada);
-                if (tipo==1 || tipo==0){
-                    return tipo;
-                }
-                System.out.print("Digite 1 para cadastrar um novo livro, 0 para um novo usuário.");
-            }
-            catch (NumberFormatException e){
-                System.out.println("Entrada errada. Tente de novo.");
-                System.out.print("Digite 1 para cadastrar um novo livro, 0 para um novo usuário.");
+        while (true) {
+                System.out.print("Digite 1 para cadastrar um livro, 0 para um usuário (Enter cancela): ");
+                String s = sc.nextLine();
+                if (s.equals("")) return -1;
+                if (s.equals("0") || s.equals("1")) return Integer.parseInt(s);
+                System.out.println("Entrada inválida.");
             }
         }
         return tipo; //Desnecessário, mas talvez o compilador implique comigo aqui
-    }
     private static Usuario PegarUsuario(Scanner scanner){
         //Rotina de entrada para preencher um objeto Usuario, muito herdado da P1n
         System.out.print("Insira o nome: ");
@@ -29,41 +20,54 @@ public class Cadastro{
         while(!nome.equals("") && !Pessoa.isNome(nome) ){
             nome=scanner.nextLine();
         }
+        if (nome.equals("")){
+            return null;
+        }
 
         System.out.print("Insira o sobrenome: ");
         String sobrenome=scanner.nextLine();
         while(!sobrenome.equals("") && !Pessoa.isSobreNome(sobrenome)){
             sobrenome=scanner.nextLine();
         }
-
+        if (sobrenome.equals("")){
+            return null;
+        }
         System.out.print("Dia de nascimento: ");
         String dia=scanner.nextLine();
         while(!dia.equals("") && !ValidaData.isDia(dia)){
             System.out.println("Dia inválido, escolher valor entre 1 e 31");
             dia=scanner.nextLine();
         }
-
+        if (dia.equals("")){
+            return null;
+        }
         System.out.print("Mês de nascimento: ");
         String mes=scanner.nextLine();
         while(!mes.equals("") && !ValidaData.isMes(mes)){
             System.out.println("Mês inválido, escolher valor entre 1 e 12 ou janeiro fevereiro marco .... dezembro ");
             mes=scanner.nextLine();
         }
-
+        if (mes.equals("")){
+            return null;
+        }
         System.out.print("Ano de nascimento: ");
         String ano=scanner.nextLine();
         while(!ano.equals("") && !ValidaData.isAno(ano)){
             System.out.println("Ano inválido, inserir um número de 4 dígitos entre o ano atual e 120 anos atrás");
             ano=scanner.nextLine();
         }
-
+        if (ano.equals("")){
+            return null;
+        }
         System.out.print("Insira o CPF: ");
         String CPF=scanner.nextLine();
         while(!CPF.equals("") && !ValidaCPF.isCPF(CPF)){
             System.out.println("CPF inválido, digite um válido nos 3 possíveis formatos:12345678901, 123.456.789-01, 123.456.789/01 ");
             CPF=scanner.nextLine();
         }
-
+        if (CPF.equals("")){
+            return null;
+        }
         while(!ValidaData.isDataValida(ano,mes,dia)){ //Pegar uma data válida
             System.out.println("Data inválida, escolher mês e dias compatíveis");
     
@@ -88,6 +92,10 @@ public class Cadastro{
                 break;
             }
         }
+        if (dia.equals("") || mes.equals("") || ano.equals("")){
+            return null;
+        }
+
         int dia_num=Integer.parseInt(dia);
         int mes_num;
         if (mes.matches("\\d{1,2}")) {
@@ -104,7 +112,9 @@ public class Cadastro{
         while(!endereco.equals("") && !endereco.matches(".{1,30}")){
             endereco=scanner.nextLine();
         }
-
+        if (endereco.equals("")){
+            return null;
+        }
         Usuario novo=new Usuario(nome,sobrenome,dia_num,mes_num,ano_num,CPF,endereco);
         System.out.println();
         return novo;

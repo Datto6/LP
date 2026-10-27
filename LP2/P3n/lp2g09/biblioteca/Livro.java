@@ -85,6 +85,7 @@ public class Livro implements Serializable {
                 hist.get(i).setDevolucao(hora_devolucao);
                 atraso=Math.max(atraso,ChronoUnit.DAYS.between(hist.get(i).getEmprestimo(),hora_devolucao));
                 achou=true;
+                break;
             }
         }
         ArrayList<Emprest> historico_user=user.getHist();
@@ -93,6 +94,7 @@ public class Livro implements Serializable {
                 historico_user.get(i).setDevolucao(hora_devolucao);
                 atraso=Math.max(atraso,ChronoUnit.DAYS.between(historico_user.get(i).getEmprestimo(),hora_devolucao));
                 achou=true;
+                break;
             }
         }
         if (atraso>90){ //Atraso maior de 90 dias acarreta 5 reais por dia de multa

@@ -38,7 +38,7 @@ public class Biblioteca implements Serializable{
     }
     //Métodos para cadastrar objetos
     public void cadastraUsuario(Usuario user) throws CPFDuplicadoEx{
-        //Cadastrar um usuario no Hashtable de livros
+        //Cadastrar um usuario no Hashtable de usuarios
         String CPF=user.getCPF();
         if (usuarios.containsKey(CPF)){
             throw new CPFDuplicadoEx(CPF);
@@ -55,35 +55,44 @@ public class Biblioteca implements Serializable{
         livros.put(codigo,livro);
     }
     //Métodos que mexem com arquivos
-    public void salvaArquivo(Hashtable<?,?> tabela, String nome) throws IOException{ //Uso de genéricos para não repetir o mesmo método pros dois Hashtables
-        // salvar com o nome especificado
-        ObjectOutputStream saida=new ObjectOutputStream(new FileOutputStream(nome));
-        saida.writeObject(tabela);
+    public void salvaUsuarios(String nome) throws IOException {
+        //Esse try já fecha a stream do arquivo no final do bloco
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(nome))) {
+            out.writeObject(usuarios);
+        }
+    }
+    public void salvaLivros(String nome) throws IOException {
+        //Esse try já fecha a stream do arquivo no final do bloco
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(nome))) {
+            out.writeObject(livros);
+        }
     }
 
-    public void leArquivo(String arquivo) throws IOException, ClassNotFoundException{
-        //ler o arquivo
-        ObjectInputStream entrada= new ObjectInputStream(new FileInputStream(arquivo));
-        Object geral=entrada.readObject();
-
-        if (!(geral instanceof Hashtable<?, ?>)) {
-            throw new IOException("O objeto não é uma Hashtable.");
+    @SuppressWarnings("unchecked")
+    public void leUsuarios(String nome) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(nome))) {
+            Object obj=in.readObject();
+            if (!(obj instanceof Hashtable)) throw new IOException("Arquivo inválido.");
+            Hashtable<?,?> t = (Hashtable<?,?>) obj;
+            for (java.util.Map.Entry<?,?> e : t.entrySet()) {
+                if (!(e.getKey() instanceof String) || !(e.getValue() instanceof Usuario)) //Checar tipagem
+                    throw new IOException("Este arquivo não contém usuários.");
+            }
+            usuarios = (Hashtable<String,Usuario>) t;
         }
-        Hashtable tabela= (Hashtable) geral;
-        if (tabela.isEmpty()) {
-            throw new IOException("Não é possível identificar uma tabela vazia.");
+    }
+    @SuppressWarnings("unchecked")
+    public void leLivros(String nome) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(nome))) {
+            Object obj=in.readObject();
+            if (!(obj instanceof Hashtable)) throw new IOException("Arquivo inválido.");
+            Hashtable<?,?> t = (Hashtable<?,?>) obj;
+            for (java.util.Map.Entry<?,?> e : t.entrySet()) {
+                if (!(e.getKey() instanceof Integer) || !(e.getValue() instanceof Livro)) //Checar tipagem
+                    throw new IOException("Este arquivo não contém usuários.");
+            }
+            livros = (Hashtable<String,Usuario>) t;
         }
-        Object chave = tabela.keys().nextElement();
-        Object valor = tabela.get(chave);
-
-        if (chave instanceof String && valor instanceof Usuario) {
-            usuarios = (Hashtable<String, Usuario>) tabela;
-        } else if (chave instanceof Integer && valor instanceof Livro) {
-            livros = (Hashtable<Integer, Livro>) tabela;
-        } else {
-            throw new IOException("Tipo de tabela desconhecido.");
-        }
-
     }
 
     public void emprestaLivro(Usuario user, Livro livro) throws CopiaNaoDisponivelEx{
@@ -94,17 +103,21 @@ public class Biblioteca implements Serializable{
         catch (CopiaNaoDisponivelEx e){
             throw e; // Lanço de novo porque quero pegar isso no módulo Emprestimo
         }
-        livro.addUsuarioHist(LocalDate.now(),null,user.getCPF()); //so executa isso se bloco except nao rodar
+        LocalDate hoje=LocalDate.now();
+        livro.addUsuarioHist(hoje,null,user.getCPF()); //so executa isso se bloco except nao rodar
+        user.addLivroHist(hoje,livro.getCodigo());
     }
     public int devolveLivro(Usuario user, Livro livro) throws NenhumaCopiaEmprestadaEx{
-        //Devolve o livro que o cara tinha
-        try {
-            livro.devolve();
+        livro.devolve();                      // Não preciso de try catch, já botei no throws 
+        int multa = livro.devolucao_Real(user);
+        if (multa == -1) {
+            try {
+                livro.empresta();             // Desfazer a devolução 
+            } catch (CopiaNaoDisponivelEx e) {
+                throw new IllegalStateException("Falha ao desfazer devolução", e); // Impossível 
+            }
+            throw new NenhumaCopiaEmprestadaEx("Este usuário não tem este livro emprestado");
         }
-        catch (NenhumaCopiaEmprestadaEx e){
-            throw e; // Lanço de novo porque quero pegar isso no módulo Emprestimo
-        }
-        int multa=livro.devolucao_Real(user); //Só executa isso se bloco except nao rodar
         return multa;
     }
     public Comparator<Livro> livroC = new Comparator<Livro> () {
@@ -120,8 +133,8 @@ public class Biblioteca implements Serializable{
         @Override
         public int compare(Usuario p1, Usuario p2){
             String CPF1,CPF2;
-            CPF1 = p1.get_numCPF();
-            CPF2 = p2.get_numCPF();
+            CPF1 = p1.getCPF();
+            CPF2 = p2.getCPF();
             return CPF1.compareTo(CPF2); //Usando comparador de Strings
         }
     };
@@ -148,10 +161,9 @@ public class Biblioteca implements Serializable{
         return saida;
     }
 
-    public Biblioteca(String usuarios, String livros) throws IOException,ClassNotFoundException{
-        //ler coisas dos arquivos aqui
-        leArquivo(usuarios);
-        leArquivo(livros);
+    public Biblioteca(String arqUsuarios, String arqLivros) throws IOException, ClassNotFoundException {
+        leUsuarios(arqUsuarios);
+        leLivros(arqLivros);
     }
     public Biblioteca(){
         //iniciar do 0 
