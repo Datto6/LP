@@ -5,10 +5,28 @@ public class Cadastro{
         //Rotina de dados de entrada para nome de arquivo de saída
         String entrada=scanner.nextLine();
         while (true && !entrada.equals("")){
-            if (entrada.matches("[^\\s/\\\\]{1,20}")){
+            if (entrada.matches("[^\\s/\\\\]{1,20}")){ //Tudo menos espaço, \, /, e com máximo de 20 caracteres
                 return entrada;
             }
         }
+    }
+    private static int PegarEntrada(Scanner scanner){
+        System.out.print("Digite 1 para cadastrar um novo livro, 0 para um novo usuário.");
+        String entrada=scanner.nextLine();
+        int tipo;
+        while (true && !entrada.equals("")){
+            try{
+                tipo=Integer.parseInt(entrada);
+                if (tipo==1 || tipo==0){
+                    return tipo;
+                }
+            }
+            case (NumberFormatException e){
+                System.out.println("Entrada errada. Tente de novo.");
+                System.out.print("Digite 1 para cadastrar um novo livro, 0 para um novo usuário.");
+            }
+        }
+        return tipo; //Desnecessário, mas talvez o compilador implique comigo aqui
     }
     private static Usuario PegarUsuario(Scanner scanner){
         //Rotina de entrada para preencher um objeto Usuario, muito herdado da P1n
@@ -37,15 +55,17 @@ public class Cadastro{
             System.out.println("Mês inválido, escolher valor entre 1 e 12 ou janeiro fevereiro marco .... dezembro ");
             mes=scanner.nextLine();
         }
+
         System.out.print("Ano de nascimento: ");
         String ano=scanner.nextLine();
         while(!ano.equals("") && !ValidaData.isAno(ano)){
             System.out.println("Ano inválido, inserir um número de 4 dígitos entre o ano atual e 120 anos atrás");
             ano=scanner.nextLine();
         }
+
         System.out.print("Insira o CPF: ");
         String CPF=scanner.nextLine();
-        while( !CPF.equals("") && !ValidaCPF.isCPF(CPF)){
+        while(!CPF.equals("") && !ValidaCPF.isCPF(CPF)){
             System.out.println("CPF inválido, digite um válido nos 3 possíveis formatos:12345678901, 123.456.789-01, 123.456.789/01 ");
             CPF=scanner.nextLine();
         }
@@ -84,11 +104,13 @@ public class Cadastro{
             mes_num=considerado.ordinal()+1; //pego um mes dado o nome dele usando o Enum, pego a posição numérica, adiciono 1 porque começa no 0.
         } 
         int ano_num=Integer.parseInt(ano);
+
         System.out.print("Insira o endereço: ");
         String endereco= scanner.nextLine();
-        while(!endereco.equals("") && !entrada.matches(".{1,30}")){
+        while(!endereco.equals("") && !endereco.matches(".{1,30}")){
             endereco=scanner.nextLine();
         }
+
         Usuario novo=new Usuario(nome,sobrenome,dia_num,mes_num,ano_num,numCPF,endereco);
         System.out.println();
         return novo;
@@ -172,7 +194,7 @@ public class Cadastro{
 
     public static Object PegarEntrada(Scanner scanner){
         //Rotina de entrada de dados, retorna um objeto Livro ou objeto Usuario
-        int tipo =tipoEntrada(scanner);
+        int tipo = tipoEntrada(scanner);
         switch (tipo){
             case 0:
                 return PegarUsuario(scanner);
@@ -195,9 +217,10 @@ public class Cadastro{
             Livro novo =(Livro) entrada;
             bib.cadastraLivro(novo);
         }
-        if (salvar){ //Fazer uma lógica real aqui para salvar
-            Manutencao.gravar(entrada,entrada);
+        System.out.println("Salvar em arquivo? Digite o nome do arquivo caso sim. Se não, apenas aperte enter.");
+        String nome_arquivo=scanner.nextLine();
+        if (!nome_arquivo.equals("")){ 
+            Manutencao.gravar(nome_arquivo,entrada);
         }
-
     }
 }

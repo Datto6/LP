@@ -48,7 +48,6 @@ public class Biblioteca{
             livro.empresta();
         }
         except (CopiaNaoDisponivelEx e){
-            System.out.println("Livro não disponível para ser emprestado");
             return; //termina execucao aqui
         }
         livro.addUsuarioHist(LocalDate.now(),null,user.getCPF()); //so executa isso se bloco except nao rodar
@@ -108,7 +107,7 @@ public class Biblioteca{
         //Retorna livro com esse codigo, caso registrado
         Livro saida=livros.get(Integer.valueOf(cod));
         if (saida==null){
-            throw LivroNaoCadastradoEx("Livro não encontrado no banco de dados");
+            throw new LivroNaoCadastradoEx("Livro não encontrado no banco de dados");
         }
         return saida;
     }

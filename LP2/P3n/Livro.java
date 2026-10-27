@@ -118,5 +118,6 @@ public class Livro{
         self.categoria=categoria;
         self.copias=copias;
         self.emprestados=emprestados;
+        self.hist=new ArrayList<EmprestPara>();
     }
 }
