@@ -205,8 +205,7 @@ public class Cadastro{
         }
     }
 
-    public static void Cadastra(Biblioteca bib){
-        Scanner scanner=new Scanner(System.in);
+    public static void Cadastra(Biblioteca bib,Scanner scanner){
         Object entrada=PegarEntrada(scanner);
         String arquivo=PegarNomeArquivo(scanner);
         if (entrada instanceof Usuario){

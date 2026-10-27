@@ -4,8 +4,34 @@ public class Biblioteca{
     //Atributos
     private HashTable<String,Usuario> usuarios;
     private HashTable<Integer,Livro> livros;
-
     //Métodos
+    //Getters
+    public Livro getLivro(int cod) throws LivroNaoCadastradoEx{
+        //Retorna livro com esse codigo, caso registrado
+        Livro saida=livros.get(Integer.valueOf(cod));
+        if (saida==null){
+            throw new LivroNaoCadastradoEx("Livro não encontrado no banco de dados");
+        }
+        return saida;
+    }
+    public Usuario getUsuario(String CPF) throws UsuarioNaoCadastradoEx{
+        //retorna Usuario com esse CPF
+        if (CPF==null){ //Isso quase que é um outro tipo de excecao
+            throw new UsuarioNaoCadastradoEx(null);
+        }
+        Usuario saida=usuarios.get(CPF);
+        if (saida==null){
+            throw new UsuarioNaoCadastradoEx(CPF);
+        }
+        return saida;
+    }
+    public HashTable<String,Usuario> getTabelaUsers(){
+        return usuarios;
+    }
+    public HashTable <Integer,Livro> getTabelaLivros(){
+        return livros;
+    }
+    //Métodos para cadastrar objetos
     public void cadastraUsuario(Usuario user) throws CPFDuplicadoEx{
         //Cadastrar um usuario no hashtable de livros
         String CPF=user.getCPF();
@@ -23,14 +49,14 @@ public class Biblioteca{
         }
         livros[codigo]=livro;
     }
-
-    public void salvaArquivo(HashTable tabela, String nome){
+    //Métodos que mexem com arquivos
+    public void salvaArquivo(HashTable<?,?> tabela, String nome) throws IOException{ //Uso de genéricos para não repetir o mesmo método pros dois HashTables
         // salvar com o nome especificado
         ObjectOutputStream saida=new ObjectOutputStream(new FileOutputStream(nome));
         saida.writeObject(tabela);
     }
 
-    public void leArquivo(String arquivo){
+    public void leArquivo(String arquivo) throws IOException{
         //ler o arquivo
         ObjectInputStream entrada= new ObjectInputStream(new FileInputStream(arquivo));
         Object geral=entrada.readObject();
@@ -103,25 +129,7 @@ public class Biblioteca{
         }
         return saida;
     }
-    public Livro getLivro(int cod) throws LivroNaoCadastradoEx{
-        //Retorna livro com esse codigo, caso registrado
-        Livro saida=livros.get(Integer.valueOf(cod));
-        if (saida==null){
-            throw new LivroNaoCadastradoEx("Livro não encontrado no banco de dados");
-        }
-        return saida;
-    }
-    public Usuario getUsuario(String CPF) throws UsuarioNaoCadastradoEx{
-        //retorna Usuario com esse CPF
-        if (CPF==null){ //Isso quase que é um outro tipo de excecao
-            throw UsuarioNaoCadastradoEx("Usuário NULL não cadastrado, nem consta.");
-        }
-        Usuario saida=usuarios.get(CPF);
-        if (saida==null){
-            throw UsuarioNaoCadastradoEx(String.format("Usuário não cadastrado, CPF: %s",CPF));
-        }
-        return saida;
-    }
+
     public Biblioteca(String usuarios, String livros){
         //ler coisas dos arquivos aqui
         self.usuarios=leArquivo(usuarios);

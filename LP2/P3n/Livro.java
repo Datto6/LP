@@ -83,7 +83,7 @@ public class Livro{
         for(int i=0;i<hist.size();i++){
             if (hist[i].getCPF().equals(CPF) && hist[i].getDevolucao()==null){ //Primeira ocorrencia de usuario procurado que ainda nao devolveu
                 hist[i].setDevolucao(hora_devolucao);
-                atraso=Math.max(atraso,ChronoUnit.DAYS.between(hist[i].getEmprestimo()));
+                atraso=Math.max(atraso,ChronoUnit.DAYS.between(hist[i].getEmprestimo(),hora_devolucao));
                 achou=true;
             }
         }
@@ -91,7 +91,7 @@ public class Livro{
         for(int i=0;i<historico_user.size();i++){
             if (historico_user[i].getCodigo()==codigo && historico_user[i].getDevolucao()==null){ //Se for igual ao codigo desse livro
                 historico_user[i].setDevolucao(hora_devolucao);
-                atraso=Math.max(atraso,ChronoUnit.DAYS.between(historico_user[i].getEmprestimo()));
+                atraso=Math.max(atraso,ChronoUnit.DAYS.between(historico_user[i].getEmprestimo(),hora_devolucao));
                 achou=true;
             }
         }
