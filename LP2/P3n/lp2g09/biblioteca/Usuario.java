@@ -1,4 +1,7 @@
 package lp2g09.biblioteca;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 public class Usuario extends Pessoa{
     private String endereco;
     private ArrayList<Emprest> hist;
@@ -7,13 +10,15 @@ public class Usuario extends Pessoa{
     public String getEndereco(){
         return endereco;
     }
-    public Arraylist<Emprest> getHist(){
+    public ArrayList<Emprest> getHist(){
         return hist;
     }
     public int getEmprestados(){
         return emprestados;
     }
-
+    public String getCPF(){
+        return super.get_numCPF();
+    }
     //Setters(apenas os que penso que podem ser modificados)
     public void setEmprestados(int num){
         emprestados=num;
@@ -22,14 +27,14 @@ public class Usuario extends Pessoa{
         endereco=newEndereco;
     }
     //Métodos obrigatórios
-    public addLivroHist(LocalDate locacao,int codigo){
+    public void addLivroHist(LocalDate locacao,int codigo){
         Emprest emprestimo=new Emprest(locacao,codigo);
         hist.add(emprestimo);
         emprestados++;
     }
     private String StringHistorico(){
         //Apenas retorna o String do historico
-        String saida=""
+        String saida="";
         for (int i=0;i<hist.size();i++){
             saida+="---------------\n";
             saida+= hist.get(i).toString()+"\n";
@@ -42,7 +47,7 @@ public class Usuario extends Pessoa{
         String saida=antigo+String.format("""
         Endereço: %s
         Emprestados: %d
-        Histórico: %s""",titulo,categoria.getName(),codigo,copias,emprestados,StringHistorico());
+        Histórico: %s""",endereco,emprestados,StringHistorico());
         return saida;
     }
     //Construtores

@@ -1,5 +1,6 @@
 package lp2g09.biblioteca;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 public class EmprestPara{
     //Indica qual usuario pegou o livro x emprestado
     private LocalDate emprestimo;
@@ -15,6 +16,10 @@ public class EmprestPara{
     public LocalDate getDevolucao(){
         return devolucao;
     }
+    //Setters
+    public void setDevolucao(LocalDate devolucao){
+        this.devolucao=devolucao;
+    }
     public String toString(){
         DateTimeFormatter formato=DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String data_emprestimo=emprestimo.format(formato);
@@ -27,11 +32,12 @@ public class EmprestPara{
         Data de empréstimo: %s 
         Data de devolução: %s 
         """,CPF,data_emprestimo,data_devolucao);
+        return saida;
     }
     public EmprestPara(LocalDate emprestimo, LocalDate devolucao, String CPF){
         //Construtor que preenche atributos
-        self.emprestimo=emprestimo;
-        self.devolucao=devolucao;
-        self.CPF=CPF;
+        this.emprestimo=emprestimo;
+        this.devolucao=devolucao;
+        this.CPF=CPF;
     }
 }

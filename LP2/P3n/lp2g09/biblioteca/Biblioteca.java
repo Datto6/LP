@@ -1,9 +1,13 @@
 package lp2g09.biblioteca;
-import java.util.HashTable;
+import java.util.Hashtable; import java.io.IOException;
+import java.util.Comparator;import java.util.ArrayList;
+import java.time.LocalDate; import java.io.ObjectOutputStream;
+import java.io.FileOutputStream; import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 public class Biblioteca{
     //Atributos
-    private HashTable<String,Usuario> usuarios;
-    private HashTable<Integer,Livro> livros;
+    private Hashtable<String,Usuario> usuarios;
+    private Hashtable<Integer,Livro> livros;
     //Métodos
 
     //Getters
@@ -26,47 +30,60 @@ public class Biblioteca{
         }
         return saida;
     }
-    public HashTable<String,Usuario> getTabelaUsers(){
+    public Hashtable<String,Usuario> getTabelaUsers(){
         return usuarios;
     }
-    public HashTable <Integer,Livro> getTabelaLivros(){
+    public Hashtable <Integer,Livro> getTabelaLivros(){
         return livros;
     }
     //Métodos para cadastrar objetos
     public void cadastraUsuario(Usuario user) throws CPFDuplicadoEx{
-        //Cadastrar um usuario no hashtable de livros
+        //Cadastrar um usuario no Hashtable de livros
         String CPF=user.getCPF();
         if (usuarios.containsKey(CPF)){
-            throw CPFDuplicadoEx(String.format("CPF %s já encontrado, usuário duplicado",CPF))
+            throw new CPFDuplicadoEx(CPF);
         }
-        usuarios[user.getCPF()]=user;
+        usuarios.put(user.getCPF(),user);
     }
 
     public void cadastraLivro(Livro livro) throws LivroDuplicadoEx{
-        //Cadastrar um livro no hashtable de livros
-        Integer codigo= Integer.valueOf(Livro.getCodigo());
+        //Cadastrar um livro no Hashtable de livros
+        Integer codigo= Integer.valueOf(livro.getCodigo());
         if(livros.containsKey(codigo)){
-            throw LivroDuplicadoEx(String.format("Código de livro %d já cadastrado, livro duplicado ",codigo))
+            throw new LivroDuplicadoEx(codigo);
         }
-        livros[codigo]=livro;
+        livros.put(codigo,livro);
     }
     //Métodos que mexem com arquivos
-    public void salvaArquivo(HashTable<?,?> tabela, String nome) throws IOException{ //Uso de genéricos para não repetir o mesmo método pros dois HashTables
+    public void salvaArquivo(Hashtable<?,?> tabela, String nome) throws IOException{ //Uso de genéricos para não repetir o mesmo método pros dois Hashtables
         // salvar com o nome especificado
         ObjectOutputStream saida=new ObjectOutputStream(new FileOutputStream(nome));
         saida.writeObject(tabela);
     }
 
-    public void leArquivo(String arquivo) throws IOException{
+    public void leArquivo(String arquivo) throws IOException, ClassNotFoundException{
         //ler o arquivo
         ObjectInputStream entrada= new ObjectInputStream(new FileInputStream(arquivo));
         Object geral=entrada.readObject();
-        if (geral instanceof HashTable<String,Usuario>){ //Uso de genericos para garantir que estou mudando atributo certo
-            usuarios=(HashTable<String,Usuario>) geral;
+
+        if (!(geral instanceof Hashtable<?, ?>)) {
+            throw new IOException("O objeto não é uma Hashtable.");
         }
-        else if (geral instanceof HashTable<Integer,Livro>){
-            livros=(HashTable<Integer,Livro>) geral;
+        Hashtable tabela= (Hashtable) geral;
+        if (tabela.isEmpty()) {
+            throw new IOException("Não é possível identificar uma tabela vazia.");
         }
+        Object chave = tabela.keys().nextElement();
+        Object valor = tabela.get(chave);
+
+        if (chave instanceof String && valor instanceof Usuario) {
+            usuarios = (Hashtable<String, Usuario>) tabela;
+        } else if (chave instanceof Integer && valor instanceof Livro) {
+            livros = (Hashtable<Integer, Livro>) tabela;
+        } else {
+            throw new IOException("Tipo de tabela desconhecido.");
+        }
+
     }
 
     public void emprestaLivro(Usuario user, Livro livro) throws CopiaNaoDisponivelEx{
@@ -79,7 +96,7 @@ public class Biblioteca{
         }
         livro.addUsuarioHist(LocalDate.now(),null,user.getCPF()); //so executa isso se bloco except nao rodar
     }
-    public int devolveLivro(Usuario user, Livro livro){
+    public int devolveLivro(Usuario user, Livro livro) throws NenhumaCopiaEmprestadaEx{
         //Devolve o livro que o cara tinha
         try {
             livro.devolve();
@@ -87,7 +104,7 @@ public class Biblioteca{
         catch (NenhumaCopiaEmprestadaEx e){
             throw e; // Lanço de novo porque quero pegar isso no módulo Emprestimo
         }
-        int multa=livro.devolucao_Real(user.getCPF()); //Só executa isso se bloco except nao rodar
+        int multa=livro.devolucao_Real(user); //Só executa isso se bloco except nao rodar
         return multa;
     }
     public Comparator<Livro> livroC = new Comparator<Livro> () {
@@ -96,7 +113,7 @@ public class Biblioteca{
             int cod1, cod2;
             cod1 = p1.getCodigo();
             cod2 = p2.getCodigo();
-            return Integer.compare(cod1,cod2) //Usa função de comparacao de inteiros
+            return Integer.compare(cod1,cod2); //Usa função de comparacao de inteiros
         }
     };
     public Comparator<Usuario> CPFC = new Comparator<Usuario> () {
@@ -110,9 +127,9 @@ public class Biblioteca{
     };
     public String imprimeLivros(){
         //retorna String com livros cadastrados ordenados por codigo de livro
-        ArrayList<Livros> lista_livros= new ArrayList<Livros>(livros.values());
+        ArrayList<Livro> lista_livros= new ArrayList<Livro>(livros.values());
         lista_livros.sort(livroC);
-        String saida=""
+        String saida="";
         for (int i=0;i<lista_livros.size();i++){
             saida+="---------------\n";
             saida+= lista_livros.get(i).toString()+"\n";
@@ -123,7 +140,7 @@ public class Biblioteca{
         //retorna string com lista de usuarios ordenados por CPF
         ArrayList<Usuario> lista_usuarios=new ArrayList<Usuario>(usuarios.values());
         lista_usuarios.sort(CPFC);
-        String saida=""
+        String saida="";
         for (int i=0;i<lista_usuarios.size();i++){
             saida+="---------------\n";
             saida+= lista_usuarios.get(i).toString()+"\n";
@@ -131,14 +148,14 @@ public class Biblioteca{
         return saida;
     }
 
-    public Biblioteca(String usuarios, String livros){
+    public Biblioteca(String usuarios, String livros) throws IOException,ClassNotFoundException{
         //ler coisas dos arquivos aqui
-        self.usuarios=leArquivo(usuarios);
-        self.livros=leArquivo(livros);
+        leArquivo(usuarios);
+        leArquivo(livros);
     }
     public Biblioteca(){
         //iniciar do 0 
-        usuarios=new HashTable<String,Usuario>;
-        livros=new HashTable<Integer,Livro>;
+        usuarios=new Hashtable<String,Usuario>();
+        livros=new Hashtable<Integer,Livro>();
     }
 }

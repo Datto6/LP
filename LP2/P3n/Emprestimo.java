@@ -1,10 +1,12 @@
 import lp2g09.biblioteca.*;
+import java.util.Scanner;
+import java.io.IOException;
 public class Emprestimo{
     //Módulo de transações(emprestimo e devolução)
 
     public static void Operacao(Usuario user, Biblioteca bib,Scanner scanner){
         //Função geral
-        int tipo=menu(bib);
+        int tipo=menu(scanner);
         switch (tipo){
             case 0:
                 Relatorio.acervoLivro(bib);
@@ -30,11 +32,11 @@ public class Emprestimo{
                 System.out.println("Entrada inválida.");
                 System.out.print("Digite 0 para ver o acervo de livros, 1 para devolver um livro, e 2 para emprestar um");
             }
-            except (NumberFormatException e){
+            catch (NumberFormatException e){
                 System.out.println("Entrada inválida.");
                 System.out.print("Digite 0 para ver o acervo de livros, 1 para devolver um livro, e 2 para emprestar um");
             }
-            String tipo=scanner.nextLine();
+            tipo=scanner.nextLine();
         }
         return saida;
     }
@@ -43,7 +45,7 @@ public class Emprestimo{
         //Devolve um livro de um usuário
         System.out.print("Inserir Código de livro que quer devolver: ");
         String codigo=scanner.nextLine();
-        int codigo_num;
+        int codigo_num=-1;
         while (true && !codigo.equals("")){
             try {
                 codigo_num=Integer.parseInt(codigo);
@@ -58,11 +60,12 @@ public class Emprestimo{
                 codigo=scanner.nextLine();
             }
         }
+        Livro livro=null;
         try {
-            Livro livro=bib.getLivro(codigo_num);
+            livro=bib.getLivro(codigo_num);
         }
         catch (LivroNaoCadastradoEx e){
-            System.println("Livro não cadastrado, deseja tentar de novo? Digite 1 se for o caso.");
+            System.out.println("Livro não cadastrado, deseja tentar de novo? Digite 1 se for o caso.");
             codigo=scanner.nextLine();
             if(codigo.equals("1")){ //Porque só tem uma opção, não vou fazer OUTRO bloco try catch para pegar o parseInt ou fazer o regex de novo
                 DevolveLivro(user,bib,scanner);
@@ -81,13 +84,13 @@ public class Emprestimo{
         Usuário:
         %s
         Livro Devolvido:
-        %s""",user.toString(),livro.toString()))
+        %s""",user.toString(),livro.toString()));
     }
 
     private static void EmprestaLivro(Usuario user, Biblioteca bib,Scanner scanner){
         System.out.print("Inserir Código de livro que quer emprestar: ");
         String codigo=scanner.nextLine();
-        int codigo_num;
+        int codigo_num=-1;
         while (true && !codigo.equals("")){
             try {
                 codigo_num=Integer.parseInt(codigo);
@@ -102,11 +105,12 @@ public class Emprestimo{
                 codigo=scanner.nextLine();
             }
         }
+        Livro livro=null;
         try {
-            Livro livro=bib.getLivro(codigo_num);
+            livro=bib.getLivro(codigo_num);
         }
         catch (LivroNaoCadastradoEx e){
-            System.out.println(String.format("Livro de código %d não encontrado", codigo_num))
+            System.out.println(String.format("Livro de código %d não encontrado", codigo_num));
             codigo=scanner.nextLine();
             if(codigo.equals("1")){ //Porque só tem uma opção, não vou fazer OUTRO bloco try catch para pegar o parseInt ou fazer o regex de novo
                 EmprestaLivro(user,bib,scanner);
@@ -124,6 +128,6 @@ public class Emprestimo{
         Usuário:
         %s
         Livro Emprestado:
-        %s""",user.toString(),livro.toString()))
+        %s""",user.toString(),livro.toString()));
     }
 }

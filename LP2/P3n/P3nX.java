@@ -1,4 +1,6 @@
 import lp2g09.biblioteca.*;
+import java.util.Scanner;
+import java.io.IOException;
 public class P3nX{
     private static  void imprimirEspMenu(Scanner scanner, Biblioteca bib){
         System.out.println("Digite 1 para imprimir um livro, 0 para um imprimir um usuário específico");
@@ -6,9 +8,10 @@ public class P3nX{
         if (opcao.equals("1")){
             System.out.println("Digite o código do livro desejado.");
             String codigo=scanner.nextLine();
+            int codigo_num=-1;
             while (true && !codigo.equals("")){
                 try {
-                    int codigo_num=Integer.parseInt(codigo);
+                    codigo_num=Integer.parseInt(codigo);
                     Livro livro=bib.getLivro(codigo_num);
                     break;
                 }
@@ -17,7 +20,7 @@ public class P3nX{
                     codigo=scanner.nextLine();
                 }
                 catch (LivroNaoCadastradoEx e){
-                    System.out.println(String.format("Livro de código %d não encontrado", codigo_num))
+                    System.out.println(String.format("Livro de código %d não encontrado", codigo_num));
                 }
             }
         }
@@ -34,15 +37,17 @@ public class P3nX{
         }
     }
     private static void  menuRelatorio(Scanner scanner,Biblioteca bib){
-        System.out.println("""O que deseja ver?
+        System.out.println("""
+        O que deseja ver?
         1. Acervo de livros 
         2. Cadastro de usuários
         3. Usuário específico
         4. Livro específico """);
         String opcao=scanner.nextLine();
+        int opcao_num=-1;
         while(true && !opcao.equals("")){
             try{
-                int opcao_num=Integer.parseInt(opcao);
+                opcao_num=Integer.parseInt(opcao);
                 break;
             }
             catch (NumberFormatException e){
@@ -63,19 +68,20 @@ public class P3nX{
         }
     }
     public static void main(String[] args){
-        Biblioteca bib;
+        Biblioteca bib=null;
         Scanner scanner=new Scanner(System.in);
         String entrada="-1";
         int acao=-1;
         while(acao!=6 && !entrada.equals("")){
-            System.out.println(""" O que deseja fazer?
+            System.out.println("""
+            O que deseja fazer?
             0. Começar do 0
             1. Ler os 2 arquivos da biblioteca
             2. Salvar em um arquivo
             3. Cadastrar Livro ou Usuário
             4. Fazer um empréstimo ou devolução
             5. Fazer algum relatório
-            6. Sair""")
+            6. Sair""");
             entrada=scanner.nextLine();
             while (true && !entrada.equals("")){
                 try{

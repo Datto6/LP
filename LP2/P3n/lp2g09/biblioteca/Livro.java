@@ -1,7 +1,7 @@
 package lp2g09.biblioteca;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
+import java.util.ArrayList;
 public class Livro{
     //Campos 
     private int codigo;
@@ -24,7 +24,7 @@ public class Livro{
         return categoria;
     }
     public int getEmprestados(){
-        return emprestados
+        return emprestados;
     }
     public ArrayList<EmprestPara> getHist(){
         return hist;
@@ -40,9 +40,9 @@ public class Livro{
         if(categoria.matches("\\d{1,2}")){ //formato só pode ser 2 digitos
             return isCategoria(Integer.parseInt(categoria));
         }
-        else if(mes.matches("[a-z]{4,9}")){
+        else if(categoria.matches("[a-z]{4,9}")){
             for (Categoria n: Categoria.values()){ //itera sobre todos os valores
-                if(mes.equals(n.name())){
+                if(categoria.equals(n.name())){
                     return true;
                 }
             }
@@ -69,7 +69,7 @@ public class Livro{
         }
     }
 
-    public addUsuarioHist(LocalDate locacao,LocalDate devolucao, String CPF){
+    public void addUsuarioHist(LocalDate locacao,LocalDate devolucao, String CPF){
         EmprestPara novo=new EmprestPara(locacao,devolucao,CPF);
         hist.add(novo); //Equivalente a uma operação de append no ArrayList
     }
@@ -81,22 +81,23 @@ public class Livro{
         long atraso=0;
         boolean achou=false;
         for(int i=0;i<hist.size();i++){
-            if (hist[i].getCPF().equals(CPF) && hist[i].getDevolucao()==null){ //Primeira ocorrencia de usuario procurado que ainda nao devolveu
-                hist[i].setDevolucao(hora_devolucao);
-                atraso=Math.max(atraso,ChronoUnit.DAYS.between(hist[i].getEmprestimo(),hora_devolucao));
+            if (hist.get(i).getCPF().equals(CPF) && hist.get(i).getDevolucao()==null){ //Primeira ocorrencia de usuario procurado que ainda nao devolveu
+                hist.get(i).setDevolucao(hora_devolucao);
+                atraso=Math.max(atraso,ChronoUnit.DAYS.between(hist.get(i).getEmprestimo(),hora_devolucao));
                 achou=true;
             }
         }
         ArrayList<Emprest> historico_user=user.getHist();
         for(int i=0;i<historico_user.size();i++){
-            if (historico_user[i].getCodigo()==codigo && historico_user[i].getDevolucao()==null){ //Se for igual ao codigo desse livro
-                historico_user[i].setDevolucao(hora_devolucao);
-                atraso=Math.max(atraso,ChronoUnit.DAYS.between(historico_user[i].getEmprestimo(),hora_devolucao));
+            if (historico_user.get(i).getCodigo()==codigo && historico_user.get(i).getDevolucao()==null){ //Se for igual ao codigo desse livro
+                historico_user.get(i).setDevolucao(hora_devolucao);
+                atraso=Math.max(atraso,ChronoUnit.DAYS.between(historico_user.get(i).getEmprestimo(),hora_devolucao));
                 achou=true;
             }
         }
         if (atraso>90){ //Atraso maior de 90 dias acarreta 5 reais por dia de multa
-            int diff=atraso-90;
+            int convertido=(int) atraso;
+            int diff=convertido -90;
             return diff*5;
         }
         if (achou){
@@ -106,7 +107,7 @@ public class Livro{
     }
     private String StringHistorico(){
         //Apenas retorna o String do Histórico
-        String saida=""
+        String saida="";
         for (int i=0;i<hist.size();i++){
             saida+="---------------\n";
             saida+= hist.get(i).toString()+"\n";
@@ -121,16 +122,16 @@ public class Livro{
         Código: %d
         Cópias: %d 
         Emprestados: %d
-        Histórico: %s""",titulo,categoria.getName(),codigo,copias,emprestados,StringHistorico());
+        Histórico: %s""",titulo,categoria.name(),codigo,copias,emprestados,StringHistorico());
         return saida;
     }
     //Construtor
     public Livro(int codigo, String titulo, Categoria categoria, int copias, int emprestados){
-        self.codigo=codigo;
-        self.titulo=titulo;
-        self.categoria=categoria;
-        self.copias=copias;
-        self.emprestados=emprestados;
-        self.hist=new ArrayList<EmprestPara>();
+        this.codigo=codigo;
+        this.titulo=titulo;
+        this.categoria=categoria;
+        this.copias=copias;
+        this.emprestados=emprestados;
+        this.hist=new ArrayList<EmprestPara>();
     }
 }

@@ -1,4 +1,6 @@
 import lp2g09.biblioteca.*;
+import java.util.Scanner;
+import java.io.IOException;
 public class Cadastro{
     //Cadastra livro ou usuario, podendo salvar ou nap
     private static int tipoEntrada(Scanner scanner){
@@ -103,7 +105,7 @@ public class Cadastro{
             endereco=scanner.nextLine();
         }
 
-        Usuario novo=new Usuario(nome,sobrenome,dia_num,mes_num,ano_num,numCPF,endereco);
+        Usuario novo=new Usuario(nome,sobrenome,dia_num,mes_num,ano_num,CPF,endereco);
         System.out.println();
         return novo;
     }
@@ -112,7 +114,7 @@ public class Cadastro{
         //Rotina de entrada para preencher um objeto Livro
         System.out.print("Insira o código: ");
         String codigo=scanner.nextLine();
-        int codigo_num;
+        int codigo_num=-1;
         while (true && !codigo.equals("")){
             try {
                 codigo_num=Integer.parseInt(codigo);
@@ -124,32 +126,42 @@ public class Cadastro{
             catch (NumberFormatException e){
                 System.out.println("Código inválido, apenas digite um número entre 1 e 999");
                 System.out.print("Insira o código: ");
-                codigo=scanner.nextLine();
             }
+            System.out.print("Insira o código: ");
+            codigo=scanner.nextLine();
         }
 
         System.out.print("Insira o título: ");
         String titulo=scanner.nextLine();
         while(!titulo.equals("") && !titulo.matches(".{1,30}")){ //Qualquer coisa com até 30 caracteres
-            System.out.println("Título inválido, qualquer coisa de 1 até 30 caracteres")
+            System.out.println("Título inválido, qualquer coisa de 1 até 30 caracteres");
             System.out.print("Insira o título: "); 
             titulo=scanner.nextLine();
         }
 
         System.out.print("Categoria: ");
         String categoria=scanner.nextLine();
-        while(!dia.equals("") && !Livro.isCategoria(categoria)){
+        while(!categoria.equals("") && !Livro.isCategoria(categoria)){
             System.out.println("Categoria inválida, escolher número entre 0 e 5");
             System.out.println("Ou uma delas por extenso e no mesmo formato: fantasia,suspense,romance,cientifico,biografias,infantil");
             categoria=scanner.nextLine();
         }
-
+        Categoria categoria_enum=null;
+        try {
+            int num=Integer.parseInt(categoria);
+            categoria_enum=Categoria.values()[num];
+        }
+        catch (NumberFormatException e){
+            if (!categoria.equals("")){
+                categoria_enum=Categoria.valueOf(categoria);
+            }
+        }
         System.out.print("Insira o número de cópias disponíveis: ");
         String copias=scanner.nextLine();
-        int copias_num;
+        int copias_num=-1;
         while (true && !copias.equals("")){
             try {
-                copias_num=Integer.parseInt(codigo);
+                copias_num=Integer.parseInt(copias);
                 if (copias_num>=0){
                     break;
                 }
@@ -158,17 +170,17 @@ public class Cadastro{
             catch (NumberFormatException e){
                 System.out.println("Digite um número maior ou igual que 0");
                 System.out.print("Insira o número de cópias disponíveis: ");
-                copias=scanner.nextLine();
             }
+            copias=scanner.nextLine();
         }
     
         System.out.print("Insira o número de já emprestados: ");
         String emprestados=scanner.nextLine();
-        int emprestados_num;
+        int emprestados_num=-1;
         while (true && !emprestados.equals("")){
             try {
-                emprestados_num=Integer.parseInt(codigo);
-                if (emprestados_num>=0 && emprestados <=copias_num){
+                emprestados_num=Integer.parseInt(emprestados);
+                if (emprestados_num>=0 && emprestados_num<=copias_num){
                     break;
                 }
                 System.out.println("Digite um número maior ou igual que 0 e menor ou igual que o número de copias");
@@ -176,10 +188,10 @@ public class Cadastro{
             catch (NumberFormatException e){
                 System.out.println("Digite um número maior ou igual que 0 e menor ou igual que o número de copias");
                 System.out.print("Insira o número de cópias disponíveis: ");
-                emprestados=scanner.nextLine();
             }
+            emprestados=scanner.nextLine();
         }
-        Livro novo=new Livro(codigo_num,titulo, categoria, int copias, int emprestados);
+        Livro novo=new Livro(codigo_num,titulo, categoria_enum, copias_num, emprestados_num);
         System.out.println();
         return novo;
     }
@@ -190,10 +202,8 @@ public class Cadastro{
         switch (tipo){
             case 0:
                 return PegarUsuario(scanner);
-                break;
             case 1:
                 return PegarLivro(scanner);
-                break;
             default:
                 break;
         }
@@ -204,16 +214,27 @@ public class Cadastro{
         Object entrada=PegarEntrada(scanner);
         if (entrada instanceof Usuario){
             Usuario novo= (Usuario) entrada;
-            bib.cadastraUsuario(novo);
+            try {
+                bib.cadastraUsuario(novo);
+            }
+            catch (CPFDuplicadoEx e){
+                System.out.println("Cadastro incompleto, pois o CPF " + novo.getCPF() + "já está cadastrado.");
+            } 
+
         }
         if (entrada instanceof Livro){
             Livro novo =(Livro) entrada;
-            bib.cadastraLivro(novo);
+            try{
+                bib.cadastraLivro(novo);
+            }
+            catch (LivroDuplicadoEx e){
+                System.out.println(String.format("Cadastro incompleto pois livro já foi cadastrado."));
+            }
         }
-        System.out.println("Salvar em arquivo? Digite o nome do arquivo caso sim. Se não, apenas aperte enter.");
+        System.out.println("Salvar em arquivo? Se sim, aperte enter.");
         String nome_arquivo=scanner.nextLine();
-        if (!nome_arquivo.equals("")){ 
-            Manutencao.gravar(nome_arquivo,entrada);
+        if (nome_arquivo.equals("")){ 
+            Manutencao.gravar(scanner,bib);
         }
     }
 }
