@@ -3,8 +3,8 @@ import java.util.Hashtable; import java.io.IOException;
 import java.util.Comparator;import java.util.ArrayList;
 import java.time.LocalDate; import java.io.ObjectOutputStream;
 import java.io.FileOutputStream; import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-public class Biblioteca{
+import java.io.ObjectInputStream; import java.io.Serializable;
+public class Biblioteca implements Serializable{
     //Atributos
     private Hashtable<String,Usuario> usuarios;
     private Hashtable<Integer,Livro> livros;

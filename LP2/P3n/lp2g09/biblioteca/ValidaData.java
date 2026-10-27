@@ -1,6 +1,7 @@
 package lp2g09.biblioteca;
-import java.time.LocalDate;
-public class ValidaData{
+import java.time.LocalDate; import java.io.Serializable;
+
+public class ValidaData implements Serializable{
     public static boolean isDia(int dia){
         if (dia<=0 || dia>31){
             return false;

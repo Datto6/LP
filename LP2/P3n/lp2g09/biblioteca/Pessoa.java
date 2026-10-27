@@ -1,9 +1,7 @@
 package lp2g09.biblioteca;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.Random;
-import java.time.Period;
-public class Pessoa{
+import java.time.LocalDate;import java.time.Month;
+import java.util.Random;import java.time.Period;import java.io.Serializable;
+public class Pessoa implements Serializable{
     private String nome,sobreNome,numCPF;
     private LocalDate dataNasc;
     private static int criados=0;

@@ -1,7 +1,7 @@
 package lp2g09.biblioteca;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-public class EmprestPara{
+import java.time.format.DateTimeFormatter; import java.io.Serializable;
+public class EmprestPara implements Serializable {
     //Indica qual usuario pegou o livro x emprestado
     private LocalDate emprestimo;
     private LocalDate devolucao;

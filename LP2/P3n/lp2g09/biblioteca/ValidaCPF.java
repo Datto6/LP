@@ -1,6 +1,7 @@
 package lp2g09.biblioteca;
+import java.io.Serializable;
 
-public class ValidaCPF{
+public class ValidaCPF implements Serializable {
     public static String formatCPF(String CPF){
         if (CPF.matches("\\d{11}")){ //formato de 11 digitos bruto
             return CPF;

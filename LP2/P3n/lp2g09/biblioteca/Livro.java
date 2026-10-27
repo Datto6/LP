@@ -1,8 +1,8 @@
 package lp2g09.biblioteca;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-public class Livro{
+import java.util.ArrayList; import java.io.Serializable;
+public class Livro implements Serializable {
     //Campos 
     private int codigo;
     private String titulo;

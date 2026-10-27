@@ -8,11 +8,12 @@ public class Manutencao{
         // salvar com o nome especificado
         if (bib==null){
             System.out.println("Biblioteca nula, primeiro abrir um objeto biblioteca antes de salvá-la.");
+            return;
         }
         System.out.print("Digitar nome do arquivo de usuários: ");
-        String usuarios=scanner.nextLine();
+        String usuarios=scanner.nextLine() +".dat";
         System.out.print("Digitar nome do arquivo de livros: ");
-        String livros=scanner.nextLine();
+        String livros=scanner.nextLine()+ ".dat";
         try{
             Hashtable<String,Usuario> tabela_user=bib.getTabelaUsers();
             Hashtable<Integer,Livro> tabela_livro=bib.getTabelaLivros();

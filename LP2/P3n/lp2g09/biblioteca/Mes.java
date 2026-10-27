@@ -1,5 +1,5 @@
-package lp2g09.biblioteca;
-public enum Mes{
+package lp2g09.biblioteca; import java.io.Serializable;
+public enum Mes implements Serializable{
     janeiro(31),
     fevereiro(28),
     marco(31),

@@ -1,8 +1,9 @@
 package lp2g09.biblioteca;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-public class Usuario extends Pessoa{
+import java.util.ArrayList; import java.io.Serializable;
+
+public class Usuario extends Pessoa implements Serializable{
     private String endereco;
     private ArrayList<Emprest> hist;
     private int emprestados=0;
