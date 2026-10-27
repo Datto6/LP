@@ -1,4 +1,4 @@
-package lp2g09.biblioteca;
+import lp2g09.biblioteca.*;
 public class Cadastro{
     //Cadastra livro ou usuario, podendo salvar ou nap
     private static  String PegarNomeArquivo(Scanner scanner){

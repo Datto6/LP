@@ -1,9 +1,27 @@
 package lp2g09.biblioteca;
-
 public class Usuario extends Pessoa{
     private String endereco;
     private ArrayList<Emprest> hist;
     private int emprestados=0;
+    //Getters
+    public String getEndereco(){
+        return endereco;
+    }
+    public Arraylist<Emprest> getHist(){
+        return hist;
+    }
+    public int getEmprestados(){
+        return emprestados;
+    }
+
+    //Setters(apenas os que penso que podem ser modificados)
+    public void setEmprestados(int num){
+        emprestados=num;
+    }
+    public void setEndereco(String newEndereco){
+        endereco=newEndereco;
+    }
+    //Métodos obrigatórios
     public addLivroHist(LocalDate locacao,int codigo){
         Emprest emprestimo=new Emprest(locacao,codigo);
         hist.add(emprestimo);

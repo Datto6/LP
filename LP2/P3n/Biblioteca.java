@@ -42,26 +42,26 @@ public class Biblioteca{
         }
     }
 
-    public void emprestaLivro(Usuario user, Livro livro){
+    public void emprestaLivro(Usuario user, Livro livro) throws CopiaNaoDisponivelEx{
         //Emprestar o livro pro cara
         try {
             livro.empresta();
         }
         except (CopiaNaoDisponivelEx e){
-            return; //termina execucao aqui
+            throw e; // Lanço de novo porque quero pegar isso no módulo Emprestimo
         }
         livro.addUsuarioHist(LocalDate.now(),null,user.getCPF()); //so executa isso se bloco except nao rodar
     }
-    public void devolveLivro(Usuario user, Livro livro){
+    public int devolveLivro(Usuario user, Livro livro){
         //Devolve o livro que o cara tinha
         try {
             livro.devolve();
         }
         except(NenhumaCopiaEmprestadaEx e){
-            System.out.println("Nenhum livro foi emprestado, nem se aplica");
-            return;
+            throw e; // Lanço de novo porque quero pegar isso no módulo Emprestimo
         }
-        devolucao_Real(user.getCPF()); //Só executa isso se bloco except nao rodar
+        int multa=livro.devolucao_Real(user.getCPF()); //Só executa isso se bloco except nao rodar
+        return multa;
     }
     public Comparator<Livro> livroC = new Comparator<Livro> () {
         @Override

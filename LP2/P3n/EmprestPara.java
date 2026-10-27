@@ -5,6 +5,16 @@ public class EmprestPara{
     private LocalDate emprestimo;
     private LocalDate devolucao;
     private String CPF;
+    //Getters
+    public String getCPF(){
+        return CPF;
+    }
+    public LocalDate getEmprestimo(){
+        return emprestimo;
+    }
+    public LocalDate getDevolucao(){
+        return devolucao;
+    }
     public String toString(){
         DateTimeFormatter formato=DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String data_emprestimo=emprestimo.format(formato);

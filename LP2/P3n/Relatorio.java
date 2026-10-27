@@ -1,4 +1,4 @@
-package lp2g09.biblioteca;
+import lp2g09.biblioteca.*;
 public class Relatorio{
     public static acervoLivro(Biblioteca bib){
         bib.imprimeLivros();

@@ -74,22 +74,35 @@ public class Livro{
         hist.add(novo); //Equivalente a uma operação de append no ArrayList
     }
     
-    public int devolucao_Real(String CPF){ 
+    public int devolucao_Real(Usuario user){ 
         //Atualiza histórico e faz calculo de atraso e etc com multa
+        String CPF=user.getCPF();
         LocalDate hora_devolucao=LocalDate.now();
         long atraso=0;
+        boolean achou=false;
         for(int i=0;i<hist.size();i++){
-            if (hist[i].getCPF()==CPF){
+            if (hist[i].getCPF().equals(CPF) && hist[i].getDevolucao()==null){ //Primeira ocorrencia de usuario procurado que ainda nao devolveu
                 hist[i].setDevolucao(hora_devolucao);
                 atraso=Math.max(atraso,ChronoUnit.DAYS.between(hist[i].getEmprestimo()));
+                achou=true;
+            }
+        }
+        ArrayList<Emprest> historico_user=user.getHist();
+        for(int i=0;i<historico_user.size();i++){
+            if (historico_user[i].getCodigo()==codigo && historico_user[i].getDevolucao()==null){ //Se for igual ao codigo desse livro
+                historico_user[i].setDevolucao(hora_devolucao);
+                atraso=Math.max(atraso,ChronoUnit.DAYS.between(historico_user[i].getEmprestimo()));
+                achou=true;
             }
         }
         if (atraso>90){ //Atraso maior de 90 dias acarreta 5 reais por dia de multa
             int diff=atraso-90;
             return diff*5;
         }
-
-        return 0;
+        if (achou){
+            return 0;
+        }
+        return -1; //Retorna -1 se não achou o 
     }
     private String StringHistorico(){
         //Apenas retorna o String do Histórico

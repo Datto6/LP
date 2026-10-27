@@ -4,9 +4,15 @@ public class Emprest {
     private LocalDate emprestimo;
     private LocalDate devolucao;
     private int codigo_Livro;
-    public Emprest(LocalDate emprestimo, int codigo){
-        self.emprestimo=emprestimo;
-        self.codigo_Livro=codigo;
+    //Getters
+    public LocalDate getEmprestimo(){
+        return emprestimo;
+    }
+    public int getCodigo(){
+        return codigo_Livro;
+    }
+    public LocalDate getDevolucao(){
+        return devolucao;
     }
     public String toString(){
         DateTimeFormatter formato=DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -21,4 +27,9 @@ public class Emprest {
         Data de devolução: %s 
         """,codigo_Livro,data_emprestimo,data_devolucao);
     } 
+    //Construtor
+    public Emprest(LocalDate emprestimo, int codigo){
+        self.emprestimo=emprestimo;
+        self.codigo_Livro=codigo;
+    }
 }

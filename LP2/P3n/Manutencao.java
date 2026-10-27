@@ -1,4 +1,4 @@
-package lp2g09.biblioteca; 
+import lp2g09.biblioteca.*;
 public class Manutencao{
     public static void gravar(String arquivo, Object entrada) throws IOException{
         // salvar com o nome especificado
