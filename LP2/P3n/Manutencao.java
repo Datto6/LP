@@ -15,11 +15,11 @@ public class Manutencao{
             bib.salvaArquivo(tabela_user,usuarios);
             bib.salvaArquivo(tabela_livro,livros)
         }
-        case (FileNotFoundException e){
+        catch (FileNotFoundException e){
             System.out.println(String.format("O arquivo %s não foi encontrado, checar diretório",e.getArq()));
             return;
         }
-        case (IOException e){
+        catch (IOException e){
             System.out.println(String.format("Erro na escrita,término de execução no arquivo %s ",e.getArq()));
             return;
         }
@@ -33,11 +33,11 @@ public class Manutencao{
         try{
             Biblioteca bib=new Biblioteca(usuarios,livros);
         }
-        case (FileNotFoundException e){
+        catch (FileNotFoundException e){
             System.out.println(String.format("O arquivo %s não foi encontrado, checar diretório",e.getArq()));
             return null;
         }
-        case (IOException e){
+        catch  (IOException e){
             System.out.println(String.format("Erro na leitura,checar integridade de arquivo %s ",e.getArq()));
             return null;
         }

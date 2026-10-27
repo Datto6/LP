@@ -1,27 +1,19 @@
 import lp2g09.biblioteca.*;
 public class Cadastro{
     //Cadastra livro ou usuario, podendo salvar ou nap
-    private static  String PegarNomeArquivo(Scanner scanner){
-        //Rotina de dados de entrada para nome de arquivo de saída
+    private static int tipoEntrada(Scanner scanner){
+        System.out.println("Digite 1 para cadastrar um novo livro, 0 para um novo usuário.");
         String entrada=scanner.nextLine();
-        while (true && !entrada.equals("")){
-            if (entrada.matches("[^\\s/\\\\]{1,20}")){ //Tudo menos espaço, \, /, e com máximo de 20 caracteres
-                return entrada;
-            }
-        }
-    }
-    private static int PegarEntrada(Scanner scanner){
-        System.out.print("Digite 1 para cadastrar um novo livro, 0 para um novo usuário.");
-        String entrada=scanner.nextLine();
-        int tipo;
+        int tipo=-1;
         while (true && !entrada.equals("")){
             try{
                 tipo=Integer.parseInt(entrada);
                 if (tipo==1 || tipo==0){
                     return tipo;
                 }
+                System.out.print("Digite 1 para cadastrar um novo livro, 0 para um novo usuário.");
             }
-            case (NumberFormatException e){
+            catch (NumberFormatException e){
                 System.out.println("Entrada errada. Tente de novo.");
                 System.out.print("Digite 1 para cadastrar um novo livro, 0 para um novo usuário.");
             }
@@ -129,7 +121,7 @@ public class Cadastro{
                 }
                 System.out.println("Código inválido, apenas digite um número entre 1 e 999");
             }
-            case (NumberFormatException e){
+            catch (NumberFormatException e){
                 System.out.println("Código inválido, apenas digite um número entre 1 e 999");
                 System.out.print("Insira o código: ");
                 codigo=scanner.nextLine();
@@ -163,7 +155,7 @@ public class Cadastro{
                 }
                 System.out.println("Digite um número maior ou igual que 0");
             }
-            case (NumberFormatException e){
+            catch (NumberFormatException e){
                 System.out.println("Digite um número maior ou igual que 0");
                 System.out.print("Insira o número de cópias disponíveis: ");
                 copias=scanner.nextLine();
@@ -181,7 +173,7 @@ public class Cadastro{
                 }
                 System.out.println("Digite um número maior ou igual que 0 e menor ou igual que o número de copias");
             }
-            case (NumberFormatException e){
+            catch (NumberFormatException e){
                 System.out.println("Digite um número maior ou igual que 0 e menor ou igual que o número de copias");
                 System.out.print("Insira o número de cópias disponíveis: ");
                 emprestados=scanner.nextLine();
@@ -198,16 +190,18 @@ public class Cadastro{
         switch (tipo){
             case 0:
                 return PegarUsuario(scanner);
+                break;
             case 1:
                 return PegarLivro(scanner);
+                break;
             default:
                 break;
         }
+        return null;
     }
 
-    public static void Cadastra(Biblioteca bib,Scanner scanner){
+    public static void Cadastra(Scanner scanner,Biblioteca bib){
         Object entrada=PegarEntrada(scanner);
-        String arquivo=PegarNomeArquivo(scanner);
         if (entrada instanceof Usuario){
             Usuario novo= (Usuario) entrada;
             bib.cadastraUsuario(novo);

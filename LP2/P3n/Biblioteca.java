@@ -5,12 +5,13 @@ public class Biblioteca{
     private HashTable<String,Usuario> usuarios;
     private HashTable<Integer,Livro> livros;
     //Métodos
+
     //Getters
     public Livro getLivro(int cod) throws LivroNaoCadastradoEx{
         //Retorna livro com esse codigo, caso registrado
         Livro saida=livros.get(Integer.valueOf(cod));
         if (saida==null){
-            throw new LivroNaoCadastradoEx("Livro não encontrado no banco de dados");
+            throw new LivroNaoCadastradoEx(cod);
         }
         return saida;
     }
@@ -73,7 +74,7 @@ public class Biblioteca{
         try {
             livro.empresta();
         }
-        except (CopiaNaoDisponivelEx e){
+        catch (CopiaNaoDisponivelEx e){
             throw e; // Lanço de novo porque quero pegar isso no módulo Emprestimo
         }
         livro.addUsuarioHist(LocalDate.now(),null,user.getCPF()); //so executa isso se bloco except nao rodar
@@ -83,7 +84,7 @@ public class Biblioteca{
         try {
             livro.devolve();
         }
-        except(NenhumaCopiaEmprestadaEx e){
+        catch (NenhumaCopiaEmprestadaEx e){
             throw e; // Lanço de novo porque quero pegar isso no módulo Emprestimo
         }
         int multa=livro.devolucao_Real(user.getCPF()); //Só executa isso se bloco except nao rodar

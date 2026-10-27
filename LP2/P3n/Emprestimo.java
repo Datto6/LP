@@ -27,6 +27,8 @@ public class Emprestimo{
                 if (saida>=0 && saida<=2){
                     return saida;
                 }
+                System.out.println("Entrada inválida.");
+                System.out.print("Digite 0 para ver o acervo de livros, 1 para devolver um livro, e 2 para emprestar um");
             }
             except (NumberFormatException e){
                 System.out.println("Entrada inválida.");
@@ -50,7 +52,7 @@ public class Emprestimo{
                 }
                 System.out.println("Código inválido, apenas digite um número entre 1 e 999");
             }
-            case (NumberFormatException e){
+            catch (NumberFormatException e){
                 System.out.println("Código inválido, apenas digite um número entre 1 e 999");
                 System.out.print("Insira o código: ");
                 codigo=scanner.nextLine();
@@ -59,7 +61,7 @@ public class Emprestimo{
         try {
             Livro livro=bib.getLivro(codigo_num);
         }
-        case (LivroNaoCadastradoEx e){
+        catch (LivroNaoCadastradoEx e){
             System.println("Livro não cadastrado, deseja tentar de novo? Digite 1 se for o caso.");
             codigo=scanner.nextLine();
             if(codigo.equals("1")){ //Porque só tem uma opção, não vou fazer OUTRO bloco try catch para pegar o parseInt ou fazer o regex de novo
@@ -69,7 +71,7 @@ public class Emprestimo{
         try{
             int multa=bib.devolveLivro(user,livro);
         }
-        case (NenhumaCopiaEmprestadaEx e){
+        catch (NenhumaCopiaEmprestadaEx e){
             System.out.println("Nenhuma copia emprestada, devolução não feita.");
             return;
         }
@@ -94,7 +96,7 @@ public class Emprestimo{
                 }
                 System.out.println("Código inválido, apenas digite um número entre 1 e 999");
             }
-            case (NumberFormatException e){
+            catch (NumberFormatException e){
                 System.out.println("Código inválido, apenas digite um número entre 1 e 999");
                 System.out.print("Insira o código: ");
                 codigo=scanner.nextLine();
@@ -103,7 +105,7 @@ public class Emprestimo{
         try {
             Livro livro=bib.getLivro(codigo_num);
         }
-        case (LivroNaoCadastradoEx e){
+        catch (LivroNaoCadastradoEx e){
             System.out.println("Livro não cadastrado, deseja tentar de novo? Digite 1 se for o caso.");
             codigo=scanner.nextLine();
             if(codigo.equals("1")){ //Porque só tem uma opção, não vou fazer OUTRO bloco try catch para pegar o parseInt ou fazer o regex de novo
