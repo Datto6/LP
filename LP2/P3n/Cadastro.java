@@ -6,13 +6,12 @@ public class Cadastro{
     private static int tipoEntrada(Scanner scanner){
         while (true) {
                 System.out.print("Digite 1 para cadastrar um livro, 0 para um usuário (Enter cancela): ");
-                String s = sc.nextLine();
+                String s = scanner.nextLine();
                 if (s.equals("")) return -1;
                 if (s.equals("0") || s.equals("1")) return Integer.parseInt(s);
                 System.out.println("Entrada inválida.");
-            }
+            } //Desnecessário, mas talvez o compilador implique comigo aqui
         }
-        return tipo; //Desnecessário, mas talvez o compilador implique comigo aqui
     private static Usuario PegarUsuario(Scanner scanner){
         //Rotina de entrada para preencher um objeto Usuario, muito herdado da P1n
         System.out.print("Insira o nome: ");

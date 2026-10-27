@@ -3,11 +3,12 @@ import java.util.Scanner;
 import java.io.IOException;
 public class Relatorio{
     public static void  acervoLivro(Biblioteca bib){
-        bib.imprimeLivros();
+        String s = bib.imprimeLivros();
+        System.out.println(s.isEmpty() ? "Nenhum livro cadastrado." : s);
     }
     public static void cadastroUsuarios(Biblioteca bib){
-        bib.imprimeUsuarios();
-
+        String s = bib.imprimeUsuarios();
+        System.out.println(s.isEmpty() ? "Nenhum usuário cadastrado." : s);
     }
     public static void imprimeUser(Usuario user){
         System.out.println(user.toString());

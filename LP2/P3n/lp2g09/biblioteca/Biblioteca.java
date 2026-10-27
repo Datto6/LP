@@ -91,7 +91,7 @@ public class Biblioteca implements Serializable{
                 if (!(e.getKey() instanceof Integer) || !(e.getValue() instanceof Livro)) //Checar tipagem
                     throw new IOException("Este arquivo não contém usuários.");
             }
-            livros = (Hashtable<String,Usuario>) t;
+            livros = (Hashtable<Integer,Livro>) t;
         }
     }
 
