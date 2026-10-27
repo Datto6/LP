@@ -106,7 +106,7 @@ public class Emprestimo{
             Livro livro=bib.getLivro(codigo_num);
         }
         catch (LivroNaoCadastradoEx e){
-            System.out.println("Livro não cadastrado, deseja tentar de novo? Digite 1 se for o caso.");
+            System.out.println(String.format("Livro de código %d não encontrado", codigo_num))
             codigo=scanner.nextLine();
             if(codigo.equals("1")){ //Porque só tem uma opção, não vou fazer OUTRO bloco try catch para pegar o parseInt ou fazer o regex de novo
                 EmprestaLivro(user,bib,scanner);

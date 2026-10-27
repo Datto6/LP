@@ -56,7 +56,7 @@ public class Livro{
             emprestados++;
         }
         else{
-            throw CopiaNaoDisponivelEx("Número de emprestados acima de copias disponiveis");
+            throw new CopiaNaoDisponivelEx("Número de emprestados acima de copias disponiveis");
         }
     }
 
@@ -65,7 +65,7 @@ public class Livro{
             emprestados--;
         }
         else{
-            throw NenhumaCopiaEmprestadaEx("Nenhum livro para devolver");
+            throw new NenhumaCopiaEmprestadaEx("Nenhum livro para devolver");
         }
     }
 
